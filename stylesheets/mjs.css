@@ -88,10 +88,6 @@ header h1 {
     margin: 0 3em 0 0;
 }
 
-header input {
-    margin-top: 9px;
-}
-
 p, ul, ol {
     margin-top: 0;
 }
@@ -170,4 +166,9 @@ section:after {
   content:"";
   display:table;
   clear:both;
+}
+
+input[type="search"] {
+    margin-bottom: 0.5em;
+    width: 100%;
 }
