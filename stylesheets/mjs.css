@@ -43,7 +43,7 @@ header {
 .content {
     top: 66px;
     right: 0;
-    bottom: 66px;
+    bottom: 40px;
     left: 0;
     background-color: #eee;
 }
@@ -51,7 +51,7 @@ header {
 footer {
     bottom: 0;
     left: 0;
-    height: 66px;
+    height: 40px;
     padding: 0.25em 0.25em 0.25em 1em;
     font-size: 80%;
 }
@@ -163,11 +163,6 @@ header a, footer a {
 /* Song playing indicators */
 .song.played {
     background-color: #CDEB8E;
-}
-
-.song.playing {
-    background: linear-gradient(to right,  #cdeb8e 0%,#cdeb8e 40%,#ffffff 40%);
-    transition: all 10s;
 }
 
 /* Clearfix apply where needed */
