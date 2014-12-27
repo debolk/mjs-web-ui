@@ -70,7 +70,7 @@ section {
 }
 
 #controls {
-    height: 10%;
+    height: 150px;
     border-bottom: 1px solid darkgray;
 }
 
@@ -109,21 +109,31 @@ header a, footer a {
     background-color: white;
     box-shadow: 0px 1px 5px rgba(0,0,0, 0.5);
     float: left;
-    height: 4em;
-    width: 3em;
+    height: 5em;
+    width: 5em;
     margin-right: 1em;
     color: darkgray;
     font-size: 80%;
+    cursor: pointer;
+}
+
+.control:active {
+    box-shadow: none;
+    background-color: #aaa;
+    transition: 0.25s all;
+    color: white;
 }
 
 .control img {
-    margin: 0 auto;
-    width: 100%;
+    width: 3em;
+    height: 3em;
+    margin: 0.25em 1em 0 1em;
 }
 
 .control span {
-    display: inline-block;
-    width: 100%;
+    margin-bottom: 0.25em;
+    display: block;
+    width: 95%;
     text-align: right;
 }
 
@@ -148,6 +158,16 @@ header a, footer a {
 .song .length {
     color: gray;
     float: right;
+}
+
+/* Song playing indicators */
+.song.played {
+    background-color: #CDEB8E;
+}
+
+.song.playing {
+    background: linear-gradient(to right,  #cdeb8e 0%,#cdeb8e 40%,#ffffff 40%);
+    transition: all 10s;
 }
 
 /* Clearfix apply where needed */
