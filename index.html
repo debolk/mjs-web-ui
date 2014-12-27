@@ -15,53 +15,133 @@
         <h1>Music</h1>
 
         <form action="#search" id="search">
-            <input type="search" placeholder="zoeken (F3)">
+            <input type="search" placeholder="zoeken F3">
         </form>
     </header>
-    <section id="songinfo">
-        <div class="song">
-            <span class="title">Another one bites the dust</span>
-            <span class="artist">Queen</span>
-            <span class="album">500 Best Queen Songs</span>
-            <span class="length">03:15</span>
-        </div>
-    </section>
-    <section id="status">
-        <span class="artist">Queen</span>
-        <span class="album">500 Best Queen Songs</span>
-        <span class="title">Another one bites the dust</span>
-        <div class="progress">
-            <span class="current_location">02:52</span>
-            <input type=range min=0 max=100 value=90 disabled>
-            <span class="length">03:15</span>
-        </div>
-    </section>
-    <section id="playlist">
-        <div class="song">
-            <span class="title">Another one bites the dust</span>
-            <span class="artist">Queen</span>
-            <span class="album">500 Best Queen Songs</span>
-            <span class="length">03:15</span>
-        </div>
-    </section>
+
+    <div class="content">
+        <section id="songinfo">
+            <div class="song">
+                <span class="title">Another one bites the dust</span> <span class="length">03:15</span>
+                <br>
+                <span class="extra">
+                    <span class="artist">Queen</span>
+                    &mdash;
+                    <span class="album">500 Best Queen Songs</span>
+                </span>
+            </div>
+            <div class="song">
+                <span class="title">Another one bites the dust</span> <span class="length">03:15</span>
+                <br>
+                <span class="extra">
+                    <span class="artist">Queen</span>
+                    &mdash;
+                    <span class="album">500 Best Queen Songs</span>
+                </span>
+            </div>
+            <div class="song">
+                <span class="title">Another one bites the dust</span> <span class="length">03:15</span>
+                <br>
+                <span class="extra">
+                    <span class="artist">Queen</span>
+                    &mdash;
+                    <span class="album">500 Best Queen Songs</span>
+                </span>
+            </div>
+            <div class="song">
+                <span class="title">Another one bites the dust</span> <span class="length">03:15</span>
+                <br>
+                <span class="extra">
+                    <span class="artist">Queen</span>
+                    &mdash;
+                    <span class="album">500 Best Queen Songs</span>
+                </span>
+            </div>
+            <div class="song">
+                <span class="title">Another one bites the dust</span> <span class="length">03:15</span>
+                <br>
+                <span class="extra">
+                    <span class="artist">Queen</span>
+                    &mdash;
+                    <span class="album">500 Best Queen Songs</span>
+                </span>
+            </div>
+            <div class="song">
+                <span class="title">Another one bites the dust</span> <span class="length">03:15</span>
+                <br>
+                <span class="extra">
+                    <span class="artist">Queen</span>
+                    &mdash;
+                    <span class="album">500 Best Queen Songs</span>
+                </span>
+            </div>
+        </section>
+
+        <section id="controls">
+            <div class="control" id="control-clear">
+                <img src="images/clear.svg" alt="Clear playlist"><br>
+                <span class="key">F2</span>
+            </div>
+            <div class="control" id="control-search">
+                <img src="images/search.svg" height="64" width="64" alt="Search">
+                <span class="key">F3</span>
+            </div>
+            <div class="control" id="control-shuffle">
+                <img src="images/shuffle.svg" height="64" width="64" alt="Shuffle playlist">
+                <span class="key">F4</span>
+            </div>
+            <div class="control" id="control-previous">
+                <img src="images/previous.svg" height="64" width="64" alt="Previous song">
+                <span class="key">F5</span>
+            </div>
+            <div class="control" id="control-stop">
+                <img src="images/stop.svg" height="64" width="64" alt="Stop">
+                <span class="key">F6</span>
+            </div>
+            <div class="control" id="control-play">
+                <img src="images/play.svg" height="64" width="64" alt="Play">
+                <span class="key">F7</span>
+            </div>
+            <div class="control" id="control-forward">
+                <img src="images/forward.svg" height="64" width="64" alt="Next song">
+                <span class="key">F8</span>
+            </div>
+        </section>
+
+        <section id="playlist">
+            <div class="song">
+                <span class="title">Another one bites the dust</span> <span class="length">03:15</span>
+                <br>
+                <span class="extra">
+                    <span class="artist">Queen</span>
+                    &mdash;
+                    <span class="album">500 Best Queen Songs</span>
+                </span>
+            </div>
+            <div class="song">
+                <span class="title">Another one bites the dust</span> <span class="length">03:15</span>
+                <br>
+                <span class="extra">
+                    <span class="artist">Queen</span>
+                    &mdash;
+                    <span class="album">500 Best Queen Songs</span>
+                </span>
+            </div>
+            <div class="song">
+                <span class="title">Another one bites the dust</span> <span class="length">03:15</span>
+                <br>
+                <span class="extra">
+                    <span class="artist">Queen</span>
+                    &mdash;
+                    <span class="album">500 Best Queen Songs</span>
+                </span>
+            </div>
+        </section>
+    </div>
+
+
     <footer>
-        <nav>
-        <small>
-            F1: reset program
-            F2: clear playlist
-            F3: search
-            F4: repeat last search
-            F5: shuffle playlist
-            F6: <strike>save playlist</strike>
-            F7: stop
-            F8: play/pause
-            F9: previous
-            F10: skip backward
-            F11: skip forward
-            F12: next
-            </small>
-        </nav>
-        <p>Built with &hearts; by <a href="https://www.facebook.com/max.maton">Max</a> and <a href="https://www.facebook.com/jakobbuis">Jakob</a>, 2014.</p>
+        MJS web UI &mdash; Built with &hearts; by <a href="https://www.facebook.com/max.maton">Max</a> and <a href="https://www.facebook.com/jakobbuis">Jakob</a>, 2014.
     </footer>
 </body>
 </html>

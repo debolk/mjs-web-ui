@@ -1,36 +1,84 @@
+/* Sane border-box sizing */
+html {
+    box-sizing: border-box;
+}
+*, *:before, *:after {
+  box-sizing: inherit;
+}
+
+html, body {
+    height: 100%;
+}
+
 body {
     margin: 0;
     font-family: "Cardo", serif;
     font-size: x-large;
     padding: 0;
     background-color: #800000;
-    box-sizing: border-box;
+}
+
+header, footer, .content {
+    position: absolute;
+    width: 100%;
+    margin: 0;
 }
 
 header, footer {
-    width: 100%;
-    margin: 0;
-    clear: both;
     color: white;
     background-color: #800000;
+    overflow: hidden;
 }
 
 header {
+    top: 0;
+    left: 0;
+    height: 66px;
     padding: 0 0 0 1em;
     position: fixed;
     top: 0;
     box-shadow: 0px 1px 5px rgba(0,0,0, 0.5);
 }
 
+.content {
+    top: 66px;
+    right: 0;
+    bottom: 66px;
+    left: 0;
+    background-color: #eee;
+}
+
 footer {
+    bottom: 0;
+    left: 0;
+    height: 66px;
     padding: 0.25em 0.25em 0.25em 1em;
+    font-size: 80%;
 }
 
 /* main interface sections*/
 section {
     padding: 1em;
     float: left;
+    width: 50%;
+    overflow: auto;
 }
+
+#songinfo {
+    height: 100%;
+    border-right: 1px solid darkgray;
+}
+
+#controls {
+    height: 10%;
+    border-bottom: 1px solid darkgray;
+}
+
+#playlist {
+    height: 60%;
+}
+
+/* random content elements */
 
 header h1 {
     display: inline-block;
@@ -44,12 +92,6 @@ header input {
     margin-top: 9px;
 }
 
-section {
-    margin-top: 66px;
-    padding: 1em;
-    background-color: white;
-}
-
 p, ul, ol {
     margin-top: 0;
 }
@@ -60,4 +102,57 @@ input {
 
 header a, footer a {
     color: white;
+}
+
+/* Music controls */
+.control {
+    background-color: white;
+    box-shadow: 0px 1px 5px rgba(0,0,0, 0.5);
+    float: left;
+    height: 4em;
+    width: 3em;
+    margin-right: 1em;
+    color: darkgray;
+    font-size: 80%;
+}
+
+.control img {
+    margin: 0 auto;
+    width: 100%;
+}
+
+.control span {
+    display: inline-block;
+    width: 100%;
+    text-align: right;
+}
+
+/* Song UI */
+.song {
+    border-bottom: 1px solid gray: ;
+    background-color: white;
+    padding: 1em;
+    margin-bottom: 0.5em;
+    box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.5);
+}
+
+.song span {
+    display: inline-block;
+}
+
+.song .extra {
+    font-size: 75%;
+    color: gray;
+}
+
+.song .length {
+    color: gray;
+    float: right;
+}
+
+/* Clearfix apply where needed */
+section:after {
+  content:"";
+  display:table;
+  clear:both;
 }
