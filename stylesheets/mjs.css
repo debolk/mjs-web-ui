@@ -1,0 +1,63 @@
+body {
+    margin: 0;
+    font-family: "Cardo", serif;
+    font-size: x-large;
+    padding: 0;
+    background-color: #800000;
+    box-sizing: border-box;
+}
+
+header, footer {
+    width: 100%;
+    margin: 0;
+    clear: both;
+    color: white;
+    background-color: #800000;
+}
+
+header {
+    padding: 0 0 0 1em;
+    position: fixed;
+    top: 0;
+    box-shadow: 0px 1px 5px rgba(0,0,0, 0.5);
+}
+
+footer {
+    padding: 0.25em 0.25em 0.25em 1em;
+}
+
+/* main interface sections*/
+section {
+    padding: 1em;
+    float: left;
+}
+
+header h1 {
+    display: inline-block;
+    float: left;
+    font-size: 200%;
+    font-weight: boldest;
+    margin: 0 3em 0 0;
+}
+
+header input {
+    margin-top: 9px;
+}
+
+section {
+    margin-top: 66px;
+    padding: 1em;
+    background-color: white;
+}
+
+p, ul, ol {
+    margin-top: 0;
+}
+
+input {
+    font-size: 1.5em;
+}
+
+header a, footer a {
+    color: white;
+}
