@@ -24,19 +24,36 @@ document.addEventListener('DOMContentLoaded', function(){
         }, fatal_error);
     }, fatal_error);
 
-    // Load existing playlist
+    // Load the player
     var playlistUI = document.getElementById('playlist');
     mjs.players.listMjs(function(players){
         window.player = players[0];
+        // Load playlist
         player.getPlaylist(function(playlist){
             window.playlist = playlist;
             playlist.items.forEach(function(playlistItem){
                 playlistItem.getSong(function(song){
                     playlistUI.innerHTML += build_entry_ui(song);
-                }, fatal_error);
+                }, function(error) {
+                    // No song data is available
+                    return;
+                });
             });
         }, fatal_error);
+
+        // Highlight currently playing song
+        player.getCurrent(function(song){
+            if (song === {}) {
+                return; // No song currently playing
+            }
+            // // Find current song in UI
+            // var song = undefined;
+            // // Highlight progress in song
+            // draw_song_progress(song, 40, 100);
+        }, fatal_error);
     }, fatal_error);
+
+
 
     /*// Global event handlers (play, pause, etc)
     document.getElementById('control-clear').addEventListener('click', mjs.clear);
