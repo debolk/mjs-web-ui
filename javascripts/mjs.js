@@ -1,47 +1,28 @@
 // Start behaviour when DOM is ready
 document.addEventListener('DOMContentLoaded', function(){
 
-    // Compile handlebars templates
-    window.song_template = Handlebars.compile(document.getElementById('song-template').innerHTML);
-
-    // Initiate keyboard navigation through lists
-    var a = document.querySelector('#songinfo .entry');
-    var b = document.querySelector('#playlist .entry');
-    var keyboardNavigator = new KeyboardNavigator(a, a, b);
-    document.addEventListener('keyup', function(event){
-        switch (event.keyCode)
-        {
-            case 40:    // arrow down
-            {
-                keyboardNavigator.next(); break;
-            }
-            case 38:    // arrow up
-            {
-                keyboardNavigator.previous(); break;
-            }
-            case 9:    // Tab
-            {
-                keyboardNavigator.switch(); break;
-            }
-            default:
-            {
-                return; // KeyCode not caught, proceed normally
-            }
-        }
-        event.preventDefault();
+    // Setup handlebars
+    window.entry_template = Handlebars.compile(document.getElementById('entry_template').innerHTML);
+    Handlebars.registerHelper('printBackup', function (value, backup) {
+        return new Handlebars.SafeString(value || backup);
     });
 
-    // // Initiate music master control
-    // window.mjs = new MusicMaster('http://www.delftelectronics.nl/musicmaster/');
+    // Initiate music master control
+    window.mjs = new MusicMaster('http://www.delftelectronics.nl/musicmaster/');
     // // Start browser
     // mjs.files.listBrowse(function(browseCapability){
     //     browseCapability[0].open(function(directory){
-    //         // Insert all root-level entries in interface
-    //         var list = document.querySelector('#songinfo .songs');
-    //         Array.prototype.forEach.call(directory.entries, function(song, i) {
-    //             list.innerHTML = list.innerHTML + build_song_UI(song);
-    //             console.log(song);
+    //         // Iterate over all entries and open them
+    //         directory.entries.each(function(entry, i){
+    //             directory.open(entry, function(result){
+    //                 console.log(result);
+    //             }, fatal_error);
     //         });
+    //         // // Insert all root-level entries in interface
+    //         // var list = document.querySelector('#songinfo .songs');
+    //         // Array.prototype.forEach.call(directory.entries, function(entry, i) {
+    //         //     list.innerHTML = list.innerHTML + new_entry(entry);
+    //         // });
     //     }, fatal_error);
     // }, fatal_error);
 
@@ -52,9 +33,7 @@ document.addEventListener('DOMContentLoaded', function(){
     document.getElementById('control-previous').addEventListener('click', mjs.previous);
     document.getElementById('control-stop').addEventListener('click', mjs.stop);
     document.getElementById('control-play').addEventListener('click', mjs.play);
-    document.getElementById('control-forward').addEventListener('click', mjs.forward);
-
-
+    document.getElementById('control-forward').addEventListener('click', mjs.forward);*/
 
     // Keyboard for controls
     document.addEventListener('keyup', function(event){
@@ -98,7 +77,7 @@ document.addEventListener('DOMContentLoaded', function(){
         event = document.createEvent('HTMLEvents');
         event.initEvent('click', true, false);
         el.dispatchEvent(event);
-    });*/
+    });
 });
 
 /**
@@ -126,11 +105,40 @@ function draw_song_progress(song, current, total)
 
 /**
  * Construct a song entry
- * @param  {Directory} song directory from mjs client
+ * @param  {Object} entry valid entry from mjs client
  * @return {String}       HTML-description
  */
-function build_song_UI(song)
+function new_entry(data)
 {
-    console.log(song);
-    return song_template({title: song});
+    console.log(data);
+    return entry_template(data)
+}
+
+function initiate_keyboard_navigation()
+{
+    var a = document.querySelector('#songinfo .entry');
+    var b = document.querySelector('#playlist .entry');
+    var keyboardNavigator = new KeyboardNavigator(a, a, b);
+    document.addEventListener('keyup', function(event){
+        switch (event.keyCode)
+        {
+            case 40:    // arrow down
+            {
+                keyboardNavigator.next(); break;
+            }
+            case 38:    // arrow up
+            {
+                keyboardNavigator.previous(); break;
+            }
+            case 9:    // Tab
+            {
+                keyboardNavigator.switch(); break;
+            }
+            default:
+            {
+                return; // KeyCode not caught, proceed normally
+            }
+        }
+        event.preventDefault();
+    });
 }

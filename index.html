@@ -24,34 +24,6 @@
                 <input type="search" id="search_input">
             </form>
             <div class="songs">
-                <div class="entry song">
-                    <img src="images/song.svg" alt="Song" class="icon">
-                    <span class="title">Another one bites the dust</span> <span class="length">03:15</span>
-                    <br>
-                    <span class="extra">
-                        <span class="artist">Queen</span>
-                        &mdash;
-                        <span class="album">500 Best Queen Songs</span>
-                    </span>
-                </div>
-                <div class="entry directory">
-                    <img src="images/directory.svg" alt="Directory" class="icon">
-                    <span class="title">Highlights from Amélie</span>
-                    <br>
-                    <span class="extra">
-                        <span class="artist">Jan Tiersen</span>
-                    </span>
-                </div>
-                <div class="entry song">
-                    <img src="images/song.svg" alt="Song" class="icon">
-                    <span class="title">Another one bites the dust</span> <span class="length">03:15</span>
-                    <br>
-                    <span class="extra">
-                        <span class="artist">Queen</span>
-                        &mdash;
-                        <span class="album">500 Best Queen Songs</span>
-                    </span>
-                </div>
             </div>
         </section>
 
@@ -87,36 +59,6 @@
         </section>
 
         <section id="playlist">
-            <div class="entry song played">
-                <img src="images/song.svg" alt="Song" class="icon">
-                <span class="title">Another one bites the dust</span> <span class="length">03:15</span>
-                <br>
-                <span class="extra">
-                    <span class="artist">Queen</span>
-                    &mdash;
-                    <span class="album">500 Best Queen Songs</span>
-                </span>
-            </div>
-            <div class="entry song playing">
-                <img src="images/song.svg" alt="Song" class="icon">
-                <span class="title">Another one bites the dust</span> <span class="length">03:15</span>
-                <br>
-                <span class="extra">
-                    <span class="artist">Queen</span>
-                    &mdash;
-                    <span class="album">500 Best Queen Songs</span>
-                </span>
-            </div>
-            <div class="entry song">
-                <img src="images/song.svg" alt="Song" class="icon">
-                <span class="title">Another one bites the dust</span> <span class="length">03:15</span>
-                <br>
-                <span class="extra">
-                    <span class="artist">Queen</span>
-                    &mdash;
-                    <span class="album">500 Best Queen Songs</span>
-                </span>
-            </div>
         </section>
     </div>
 
@@ -125,9 +67,10 @@
         MJS web UI &mdash; Built with &hearts; by <a href="https://www.facebook.com/max.maton">Max</a> and <a href="https://www.facebook.com/jakobbuis">Jakob</a>, 2014.
     </footer>
 
-    <script id="song-template" type="text/x-handlebars-template">
-        <div class="entry {{type}}">
-            <span class="title">{{title}}</span> <span class="length">03:15</span>
+    <script id="entry_template" type="text/x-handlebars-template">
+        <div class="entry song">
+            <img src="images/song.svg" alt="Song" class="icon">
+            <span class="title">Another one bites the dust</span> <span class="length">03:15</span>
             <br>
             <span class="extra">
                 <span class="artist">Queen</span>
@@ -138,3 +81,14 @@
     </script>
 </body>
 </html>
+
+<!-- <div class="entry song">
+    <img src="images/song.svg" alt="Song" class="icon">
+    <span class="title">Another one bites the dust</span> <span class="length">03:15</span>
+    <br>
+    <span class="extra">
+        <span class="artist">Queen</span>
+        &mdash;
+        <span class="album">500 Best Queen Songs</span>
+    </span>
+</div> -->
