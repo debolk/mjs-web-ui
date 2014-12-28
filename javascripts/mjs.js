@@ -2,29 +2,26 @@
 document.addEventListener('DOMContentLoaded', function(){
 
     // Setup handlebars
-    window.entry_template = Handlebars.compile(document.getElementById('entry_template').innerHTML);
-    Handlebars.registerHelper('printBackup', function (value, backup) {
+    window.directory_template = Handlebars.compile(document.getElementById('directory_template').innerHTML);
+    window.song_template = Handlebars.compile(document.getElementById('song_template').innerHTML);
+    Handlebars.registerHelper('output', function (value, backup) {
         return new Handlebars.SafeString(value || backup);
     });
 
     // Initiate music master control
     window.mjs = new MusicMaster('http://www.delftelectronics.nl/musicmaster/');
-    // // Start browser
-    // mjs.files.listBrowse(function(browseCapability){
-    //     browseCapability[0].open(function(directory){
-    //         // Iterate over all entries and open them
-    //         directory.entries.each(function(entry, i){
-    //             directory.open(entry, function(result){
-    //                 console.log(result);
-    //             }, fatal_error);
-    //         });
-    //         // // Insert all root-level entries in interface
-    //         // var list = document.querySelector('#songinfo .songs');
-    //         // Array.prototype.forEach.call(directory.entries, function(entry, i) {
-    //         //     list.innerHTML = list.innerHTML + new_entry(entry);
-    //         // });
-    //     }, fatal_error);
-    // }, fatal_error);
+    // Start browser
+    var songinfo = document.querySelector('#songinfo .songs');
+    mjs.files.listBrowse(function(browseCapability){
+        browseCapability[0].open(function(directory){
+            // Iterate over all entries and open them
+            directory.entries.forEach(function(entry){
+                directory.open(entry, function(entry){
+                    songinfo.innerHTML += build_entry_ui(entry);
+                }, fatal_error);
+            });
+        }, fatal_error);
+    }, fatal_error);
 
     /*// Global event handlers (play, pause, etc)
     document.getElementById('control-clear').addEventListener('click', mjs.clear);
@@ -87,7 +84,8 @@ document.addEventListener('DOMContentLoaded', function(){
  */
 function fatal_error(details)
 {
-    alert('Fatal error\n\nTechnical details: '+details.toString());
+    console.log(details);
+    // alert('Fatal error\n\nTechnical details: '+details.toString());
 }
 
 /**
@@ -108,10 +106,16 @@ function draw_song_progress(song, current, total)
  * @param  {Object} entry valid entry from mjs client
  * @return {String}       HTML-description
  */
-function new_entry(data)
+function build_entry_ui(data)
 {
     console.log(data);
-    return entry_template(data)
+
+    if (data.type == 'directory') {
+        return directory_template(data);
+    }
+    else {
+        return song_template(data);
+    }
 }
 
 function initiate_keyboard_navigation()
