@@ -4,19 +4,19 @@ document.addEventListener('DOMContentLoaded', function(){
     // Compile handlebars templates
     window.song_template = Handlebars.compile(document.getElementById('song-template').innerHTML);
 
-    // Initiate music master control
-    window.mjs = new MusicMaster('http://www.delftelectronics.nl/musicmaster/');
-    // Start browser
-    mjs.files.listBrowse(function(browseCapability){
-        browseCapability[0].open(function(directory){
-            // Insert all root-level entries in interface
-            var list = document.querySelector('#songinfo .songs');
-            Array.prototype.forEach.call(directory.entries, function(song, i) {
-                list.innerHTML = list.innerHTML + build_song_UI(song);
-                console.log(song);
-            });
-        }, fatal_error);
-    }, fatal_error);
+    // // Initiate music master control
+    // window.mjs = new MusicMaster('http://www.delftelectronics.nl/musicmaster/');
+    // // Start browser
+    // mjs.files.listBrowse(function(browseCapability){
+    //     browseCapability[0].open(function(directory){
+    //         // Insert all root-level entries in interface
+    //         var list = document.querySelector('#songinfo .songs');
+    //         Array.prototype.forEach.call(directory.entries, function(song, i) {
+    //             list.innerHTML = list.innerHTML + build_song_UI(song);
+    //             console.log(song);
+    //         });
+    //     }, fatal_error);
+    // }, fatal_error);
 
     /*// Global event handlers (play, pause, etc)
     document.getElementById('control-clear').addEventListener('click', mjs.clear);
@@ -102,5 +102,6 @@ function draw_song_progress(song, current, total)
  */
 function build_song_UI(song)
 {
+    console.log(song);
     return song_template({title: song});
 }

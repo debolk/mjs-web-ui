@@ -64,11 +64,11 @@ section {
     overflow: auto;
 }
 
-#search {
-    border-bottom: 1px solid darkgray;
+#songinfo {
+    border-right: 1px solid darkgray;
 }
 
-#songinfo {
+.entryinfo {
     height: 100%;
     border-right: 1px solid darkgray;
 }
@@ -137,8 +137,8 @@ header a, footer a {
     text-align: right;
 }
 
-/* Song UI */
-.song {
+/*.Song and folder UI */
+.entry {
     border-bottom: 1px solid gray: ;
     background-color: white;
     padding: 1em;
@@ -146,22 +146,29 @@ header a, footer a {
     box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.5);
 }
 
-.song span {
+.entry span {
     display: inline-block;
 }
 
-.song .extra {
+.entry .extra {
     font-size: 75%;
     color: gray;
 }
 
-.song .length {
+.entry .length {
     color: gray;
     float: right;
 }
 
-/* Song playing indicators */
-.song.played {
+.entry .icon {
+    width: 3em;
+    height: 3em;
+    float: left;
+    margin-right: 1em;
+}
+
+/*.entry playing indicators */
+.entry.played {
     background-color: #CDEB8E;
 }
 
