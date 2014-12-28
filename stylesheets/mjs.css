@@ -146,6 +146,10 @@ header a, footer a {
     box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.5);
 }
 
+.entry.cursor {
+    background-color: #8cc;
+}
+
 .entry span {
     display: inline-block;
 }

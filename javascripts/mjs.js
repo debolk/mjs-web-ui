@@ -4,6 +4,33 @@ document.addEventListener('DOMContentLoaded', function(){
     // Compile handlebars templates
     window.song_template = Handlebars.compile(document.getElementById('song-template').innerHTML);
 
+    // Initiate keyboard navigation through lists
+    var a = document.querySelector('#songinfo .entry');
+    var b = document.querySelector('#playlist .entry');
+    var keyboardNavigator = new KeyboardNavigator(a, a, b);
+    document.addEventListener('keyup', function(event){
+        switch (event.keyCode)
+        {
+            case 40:    // arrow down
+            {
+                keyboardNavigator.next(); break;
+            }
+            case 38:    // arrow up
+            {
+                keyboardNavigator.previous(); break;
+            }
+            case 9:    // Tab
+            {
+                keyboardNavigator.switch(); break;
+            }
+            default:
+            {
+                return; // KeyCode not caught, proceed normally
+            }
+        }
+        event.preventDefault();
+    });
+
     // // Initiate music master control
     // window.mjs = new MusicMaster('http://www.delftelectronics.nl/musicmaster/');
     // // Start browser
@@ -27,7 +54,9 @@ document.addEventListener('DOMContentLoaded', function(){
     document.getElementById('control-play').addEventListener('click', mjs.play);
     document.getElementById('control-forward').addEventListener('click', mjs.forward);
 
-    // Keyboard shortcuts
+
+
+    // Keyboard for controls
     document.addEventListener('keyup', function(event){
         var el;
         switch (event.keyCode)
