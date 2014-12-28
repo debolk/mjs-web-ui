@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="stylesheets/mjs.css">
 
     <script type="text/javascript" src="http://www.delftelectronics.nl/musicmaster-js/musicmaster.js"></script>
+    <script type="text/javascript" src="javascripts/handlebars-v2.0.0-1.js"></script>
     <script type="text/javascript" src="javascripts/mjs.js"></script>
 </head>
 <body>
@@ -18,64 +19,11 @@
 
     <div class="content">
         <section id="songinfo">
-            <form action="#search">
-                <input type="search" id="search">
+            <form action="#">
+                <input type="search" id="search_input">
             </form>
             <div class="songs">
-                <div class="song">
-                    <span class="title">Another one bites the dust</span> <span class="length">03:15</span>
-                    <br>
-                    <span class="extra">
-                        <span class="artist">Queen</span>
-                        &mdash;
-                        <span class="album">500 Best Queen Songs</span>
-                    </span>
-                </div>
-                <div class="song">
-                    <span class="title">Another one bites the dust</span> <span class="length">03:15</span>
-                    <br>
-                    <span class="extra">
-                        <span class="artist">Queen</span>
-                        &mdash;
-                        <span class="album">500 Best Queen Songs</span>
-                    </span>
-                </div>
-                <div class="song">
-                    <span class="title">Another one bites the dust</span> <span class="length">03:15</span>
-                    <br>
-                    <span class="extra">
-                        <span class="artist">Queen</span>
-                        &mdash;
-                        <span class="album">500 Best Queen Songs</span>
-                    </span>
-                </div>
-                <div class="song">
-                    <span class="title">Another one bites the dust</span> <span class="length">03:15</span>
-                    <br>
-                    <span class="extra">
-                        <span class="artist">Queen</span>
-                        &mdash;
-                        <span class="album">500 Best Queen Songs</span>
-                    </span>
-                </div>
-                <div class="song">
-                    <span class="title">Another one bites the dust</span> <span class="length">03:15</span>
-                    <br>
-                    <span class="extra">
-                        <span class="artist">Queen</span>
-                        &mdash;
-                        <span class="album">500 Best Queen Songs</span>
-                    </span>
-                </div>
-                <div class="song">
-                    <span class="title">Another one bites the dust</span> <span class="length">03:15</span>
-                    <br>
-                    <span class="extra">
-                        <span class="artist">Queen</span>
-                        &mdash;
-                        <span class="album">500 Best Queen Songs</span>
-                    </span>
-                </div>
+
             </div>
         </section>
 
@@ -145,5 +93,17 @@
     <footer>
         MJS web UI &mdash; Built with &hearts; by <a href="https://www.facebook.com/max.maton">Max</a> and <a href="https://www.facebook.com/jakobbuis">Jakob</a>, 2014.
     </footer>
+
+    <script id="song-template" type="text/x-handlebars-template">
+        <div class="song">
+            <span class="title">{{title}}</span> <span class="length">03:15</span>
+            <br>
+            <span class="extra">
+                <span class="artist">Queen</span>
+                &mdash;
+                <span class="album">500 Best Queen Songs</span>
+            </span>
+        </div>
+    </script>
 </body>
 </html>

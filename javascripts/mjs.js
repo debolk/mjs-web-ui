@@ -1,17 +1,22 @@
 // Start behaviour when DOM is ready
 document.addEventListener('DOMContentLoaded', function(){
 
-    // // Initiate music master control
-    // mjs = new MusicMaster('http://www.delftelectronics.nl/musicmaster/');
-    // mjs.players.listMjs();
+    // Compile handlebars templates
+    window.song_template = Handlebars.compile(document.getElementById('song-template').innerHTML);
 
-    // Testing code for drawing the progress unit
-    var song = document.querySelector('.song');
-    var i = 0;
-    setInterval(function(){
-        song.style.background = 'linear-gradient(to right,  #cdeb8e 0%,#cdeb8e '+i+'%,#ffffff '+i+'%)';
-        i++;
-    }, 10);
+    // Initiate music master control
+    window.mjs = new MusicMaster('http://www.delftelectronics.nl/musicmaster/');
+    // Start browser
+    mjs.files.listBrowse(function(browseCapability){
+        browseCapability[0].open(function(directory){
+            // Insert all root-level entries in interface
+            var list = document.querySelector('#songinfo .songs');
+            Array.prototype.forEach.call(directory.entries, function(song, i) {
+                list.innerHTML = list.innerHTML + build_song_UI(song);
+                console.log(song);
+            });
+        }, fatal_error);
+    }, fatal_error);
 
     /*// Global event handlers (play, pause, etc)
     document.getElementById('control-clear').addEventListener('click', mjs.clear);
@@ -66,3 +71,36 @@ document.addEventListener('DOMContentLoaded', function(){
         el.dispatchEvent(event);
     });*/
 });
+
+/**
+ * Show a fatal error to the user
+ * @param  {string} details technical details of the error
+ * @return {undefined}
+ */
+function fatal_error(details)
+{
+    alert('Fatal error\n\nTechnical details: '+details.toString());
+}
+
+/**
+ * Draw the song in progress indicator
+ * @param  {DOMObject} song the song to affect
+ * @param  {int} current number of seconds into the song
+ * @param  {int} total  total length of the song in seconds
+ * @return {undefined}
+ */
+function draw_song_progress(song, current, total)
+{
+    var percentage = Math.round(100*current/total, 0);
+    song.style.background = 'linear-gradient(to right,  #cdeb8e 0%,#cdeb8e '+percentage+'%,#ffffff '+percentage+'%)';
+}
+
+/**
+ * Construct a song entry
+ * @param  {Directory} song directory from mjs client
+ * @return {String}       HTML-description
+ */
+function build_song_UI(song)
+{
+    return song_template({title: song});
+}

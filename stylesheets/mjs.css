@@ -64,6 +64,10 @@ section {
     overflow: auto;
 }
 
+#search {
+    border-bottom: 1px solid darkgray;
+}
+
 #songinfo {
     height: 100%;
     border-right: 1px solid darkgray;
