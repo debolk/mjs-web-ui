@@ -171,11 +171,6 @@ header a, footer a {
     margin-right: 1em;
 }
 
-/*.entry playing indicators */
-.entry.played {
-    background-color: #CDEB8E;
-}
-
 /* Clearfix apply where needed */
 section:after {
   content:"";
