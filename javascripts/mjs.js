@@ -10,7 +10,8 @@ document.addEventListener('DOMContentLoaded', function(){
 
     // Initiate music master control
     window.mjs = new MusicMaster('http://www.delftelectronics.nl/musicmaster/');
-    // Start browser
+
+    // Load top-level directory entries and display them
     var songinfo = document.querySelector('#songinfo .songs');
     mjs.files.listBrowse(function(browseCapability){
         browseCapability[0].open(function(directory){
@@ -18,6 +19,20 @@ document.addEventListener('DOMContentLoaded', function(){
             directory.entries.forEach(function(entry){
                 directory.open(entry, function(entry){
                     songinfo.innerHTML += build_entry_ui(entry);
+                }, fatal_error);
+            });
+        }, fatal_error);
+    }, fatal_error);
+
+    // Load existing playlist
+    var playlistUI = document.getElementById('playlist');
+    mjs.players.listMjs(function(players){
+        window.player = players[0];
+        player.getPlaylist(function(playlist){
+            window.playlist = playlist;
+            playlist.items.forEach(function(playlistItem){
+                playlistItem.getSong(function(song){
+                    playlistUI.innerHTML += build_entry_ui(song);
                 }, fatal_error);
             });
         }, fatal_error);
@@ -84,8 +99,7 @@ document.addEventListener('DOMContentLoaded', function(){
  */
 function fatal_error(details)
 {
-    console.log(details);
-    // alert('Fatal error\n\nTechnical details: '+details.toString());
+    alert('Fatal error\n\nTechnical details: '+details.toString());
 }
 
 /**
@@ -108,8 +122,6 @@ function draw_song_progress(song, current, total)
  */
 function build_entry_ui(data)
 {
-    console.log(data);
-
     if (data.type == 'directory') {
         return directory_template(data);
     }
