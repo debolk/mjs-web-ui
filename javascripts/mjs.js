@@ -19,7 +19,7 @@ document.addEventListener('DOMContentLoaded', function(){
 
     // Load the player
     var playlistUI = document.getElementById('playlist');
-    mjs.players.listMjs(function(players){
+    mjs.players.getMjs(function(players){
         window.player = players[0];
         // Load playlist
         player.getPlaylist(function(playlist){
