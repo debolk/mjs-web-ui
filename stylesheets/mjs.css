@@ -139,6 +139,7 @@ header a, footer a {
 
 /*.Song and folder UI */
 .entry {
+    height: 5em;
     border-bottom: 1px solid gray: ;
     background-color: white;
     padding: 1em;
