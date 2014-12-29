@@ -9,7 +9,6 @@
     <link rel="stylesheet" href="stylesheets/mjs.css">
 
     <script type="text/javascript" src="http://www.delftelectronics.nl/musicmaster-js/musicmaster.js"></script>
-    <script type="text/javascript" src="javascripts/handlebars-v2.0.0-1.js"></script>
     <script type="text/javascript" src="javascripts/KeyboardNavigator.js"></script>
     <script type="text/javascript" src="javascripts/mjs.js"></script>
 </head>
@@ -66,32 +65,5 @@
     <footer>
         MJS web UI &mdash; Built with &hearts; by <a href="https://www.facebook.com/max.maton">Max</a> and <a href="https://www.facebook.com/jakobbuis">Jakob</a>, 2014.
     </footer>
-
-    <script id="song_template" type="text/x-handlebars-template">
-        <div class="entry song">
-            <img src="images/song.svg" alt="Song" class="icon">
-            <span class="title">{{output title 'Unknown title'}}</span> <span class="length">{{output length 'Unknown length'}}</span>
-            <br>
-            <span class="artist">{{output artist 'Unknown artist'}}</span>
-        </div>
-    </script>
-
-    <script id="directory_template" type="text/x-handlebars-template">
-        <div class="entry directory">
-            <img src="images/directory.svg" alt="Directory" class="icon">
-            <span class="title">{{output name 'Unknown folder'}}</span>
-        </div>
-    </script>
 </body>
 </html>
-
-<!-- <div class="entry song">
-    <img src="images/song.svg" alt="Song" class="icon">
-    <span class="title">Another one bites the dust</span> <span class="length">03:15</span>
-    <br>
-    <span class="extra">
-        <span class="artist">Queen</span>
-        &mdash;
-        <span class="album">500 Best Queen Songs</span>
-    </span>
-</div> -->

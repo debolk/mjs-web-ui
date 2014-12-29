@@ -1,13 +1,6 @@
 // Start behaviour when DOM is ready
 document.addEventListener('DOMContentLoaded', function(){
 
-    // Setup handlebars
-    window.directory_template = Handlebars.compile(document.getElementById('directory_template').innerHTML);
-    window.song_template = Handlebars.compile(document.getElementById('song_template').innerHTML);
-    Handlebars.registerHelper('output', function (value, backup) {
-        return new Handlebars.SafeString(value || backup);
-    });
-
     // Initiate music master control
     window.mjs = new MusicMaster('http://www.delftelectronics.nl/musicmaster/');
 
@@ -140,11 +133,39 @@ function draw_song_progress(song, current, total)
 function build_entry_ui(data)
 {
     if (data.type == 'directory') {
-        return directory_template(data);
+        return build_directory_ui(data);
     }
     else {
-        return song_template(data);
+        return build_song_ui(data);
     }
+}
+
+function build_song_ui(data)
+{
+    data.name = data.name || 'Unknown album';
+
+    return '<div class="entry directory"> \
+                <img src="images/directory.svg" alt="Directory" class="icon"> \
+                <span class="title">' + data.name + '</span> \
+            </div>';
+}
+
+// <script id="song_template" type="text/x-handlebars-template">
+//     </script>
+
+function build_directory_ui(data)
+{
+    data.title = data.title || 'Unknown title';
+    data.length = data.length || 'Unknown length';
+    data.artist = data.artist || 'Unknown artist';
+
+    return '<div class="entry song"> \
+                <img src="images/song.svg" alt="Song" class="icon"> \
+                <span class="title">' + data.title + '</span> \
+                <span class="length">' + data.length + '</span> \
+                <br> \
+                <span class="artist">' + data.artist + '</span> \
+            </div>';
 }
 
 function initiate_keyboard_navigation()
