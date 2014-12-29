@@ -140,7 +140,7 @@ function build_entry_ui(data)
     }
 }
 
-function build_song_ui(data)
+function build_directory_ui(data)
 {
     data.name = data.name || 'Unknown album';
 
@@ -153,7 +153,7 @@ function build_song_ui(data)
 // <script id="song_template" type="text/x-handlebars-template">
 //     </script>
 
-function build_directory_ui(data)
+function build_song_ui(data)
 {
     data.title = data.title || 'Unknown title';
     data.length = data.length || 'Unknown length';
