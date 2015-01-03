@@ -142,16 +142,13 @@ function build_entry_ui(data)
 
 function build_directory_ui(data)
 {
-    data.name = data.name || 'Unknown album';
+    data.name = (data.name == 'unknown' ? 'Unknown album' : data.name);
 
     return '<div class="entry directory"> \
                 <img src="images/directory.svg" alt="Directory" class="icon"> \
                 <span class="title">' + data.name + '</span> \
             </div>';
 }
-
-// <script id="song_template" type="text/x-handlebars-template">
-//     </script>
 
 function build_song_ui(data)
 {

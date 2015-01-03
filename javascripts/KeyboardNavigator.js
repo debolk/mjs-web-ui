@@ -32,7 +32,6 @@ function Cursor(element)
     this.element = element;
 }
 
-
 Cursor.prototype = {
     element: undefined,
     next: undefined,
