@@ -6,100 +6,136 @@ document.addEventListener('DOMContentLoaded', function(){
 
     // Load top-level directory entries and display them
     var songinfo = document.querySelector('#songinfo .songs');
-    mjs.files.listBrowse(function(browseCapability){
-        browseCapability[0].open(function(directory){
-            // Iterate over all entries and open them
-            directory.entries.forEach(function(entry){
-                directory.open(entry, function(entry){
-                    songinfo.innerHTML += build_entry_ui(entry);
-                }, fatal_error);
-            });
-        }, fatal_error);
-    }, fatal_error);
+    mjs.files.listBrowse(processBrowseCapabilities, fatal_error);
 
     // Load the player
-    var playlistUI = document.getElementById('playlist');
     mjs.players.getMjs(function(players){
-        window.player = players[0];
-        // Load playlist
-        player.getPlaylist(function(playlist){
-            window.playlist = playlist;
-            playlist.items.forEach(function(playlistItem){
-                playlistItem.getSong(function(song){
-                    playlistUI.innerHTML += build_entry_ui(song);
-                }, function(error) {
-                    // No song data is available
-                    return;
-                });
-            });
-        }, fatal_error);
-
-        // Highlight currently playing song
-        player.getCurrent(function(song){
-            if (song === {}) {
-                return; // No song currently playing
-            }
-            // // Find current song in UI
-            // var song = undefined;
-            // // Highlight progress in song
-            // draw_song_progress(song, 40, 100);
-        }, fatal_error);
-
-        // Bind controls
-        // document.getElementById('control-clear').addEventListener('click', player.clear);
-        // document.getElementById('control-search').addEventListener('click', player.search);
-        // document.getElementById('control-shuffle').addEventListener('click', player.shuffle);
-        // document.getElementById('control-previous').addEventListener('click', player.previous);
-        // document.getElementById('control-stop').addEventListener('click', player.stop);
-        // document.getElementById('control-play').addEventListener('click', player.play);
-        // document.getElementById('control-forward').addEventListener('click', player.next);
-
-        // Keyboard for controls
-        document.addEventListener('keyup', function(event){
-            var el;
-            switch (event.keyCode)
-            {
-                case 67:    // C - clear
-                {
-                    el = document.getElementById('control-clear'); break;
-                }
-                case 70:    // F - search (find)
-                {
-                    el = document.getElementById('control-search'); break;
-                }
-                case 83:    // S - stop
-                {
-                    el = document.getElementById('control-stop'); break;
-                }
-                case 37:    // Left - previous song
-                {
-                    el = document.getElementById('control-previous'); break;
-                }
-                case 72:    // H - stop (halt)
-                {
-                    el = document.getElementById('control-stop'); break;
-                }
-                case 32:    // Space - play/pause
-                {
-                    el = document.getElementById('control-play'); break;
-                }
-                case 39:    // Right - forward song
-                {
-                    el = document.getElementById('control-forward'); break;
-                }
-                default:
-                {
-                    return; // KeyCode not caught, proceed normally
-                }
-            }
-            event.preventDefault();
-            event = document.createEvent('HTMLEvents');
-            event.initEvent('click', true, false);
-            el.dispatchEvent(event);
-        });
-    }, fatal_error);
-
+        initiatePlayer(players[0]);
+    });
 });
+
+/**
+ * Initiate a player object
+ * @param  {MjsPlayer} player
+ * @return {undefined}
+ */
+function initiatePlayer(player)
+{
+    window.player = player;
+
+    player.getPlaylist(showPlaylist, fatal_error);
+    enableControls(player);
+}
+
+/**
+ * Initiate the controls for a player
+ * @param  {MjsPlayer} player
+ * @return {undefined}
+ */
+function enableControls(player)
+{
+    // Bind click handlers to button
+    document.getElementById('control-clear').addEventListener('click', player.clear);
+    document.getElementById('control-search').addEventListener('click', player.search);
+    document.getElementById('control-shuffle').addEventListener('click', player.shuffle);
+    document.getElementById('control-previous').addEventListener('click', player.previous);
+    document.getElementById('control-stop').addEventListener('click', player.stop);
+    document.getElementById('control-play').addEventListener('click', player.play);
+    document.getElementById('control-forward').addEventListener('click', player.next);
+
+    // Add keyboard controls
+    document.addEventListener('keyup', function(event){
+        var el;
+        switch (event.keyCode)
+        {
+            case 67:    // C - clear
+            {
+                el = document.getElementById('control-clear'); break;
+            }
+            case 70:    // F - search (find)
+            {
+                el = document.getElementById('control-search'); break;
+            }
+            case 83:    // S - stop
+            {
+                el = document.getElementById('control-stop'); break;
+            }
+            case 37:    // Left - previous song
+            {
+                el = document.getElementById('control-previous'); break;
+            }
+            case 72:    // H - stop (halt)
+            {
+                el = document.getElementById('control-stop'); break;
+            }
+            case 32:    // Space - play/pause
+            {
+                el = document.getElementById('control-play'); break;
+            }
+            case 39:    // Right - forward song
+            {
+                el = document.getElementById('control-forward'); break;
+            }
+            default:
+            {
+                return; // KeyCode not caught, proceed normally
+            }
+        }
+        event.preventDefault();
+        event = document.createEvent('HTMLEvents');
+        event.initEvent('click', true, false);
+        el.dispatchEvent(event);
+    });
+}
+
+function showPlaylist(playlist)
+{
+    window.playlist = playlist;
+    playlist.items.forEach(function(playlistItem){
+        playlistItem.getSong(function(song){
+            document.getElementById('playlist').innerHTML += build_entry_ui(song);
+        }, function(error) {
+            return; // No song data is available
+        });
+    });
+
+    // // Highlight currently playing song
+    // player.getCurrent(function(song){
+    //     if (song === {}) {
+    //         return; // No song currently playing
+    //     }
+    //     // // Find current song in UI
+    //     // var song = undefined;
+    //     // // Highlight progress in song
+    //     // draw_song_progress(song, 40, 100);
+    // }, fatal_error);
+}
+
+/**
+ * Process all browseCapabilities and add their contents to the UI
+ * @param  {Array} browseCapabilities
+ * @return {undefined}
+ */
+function processBrowseCapabilities(browseCapabilities)
+{
+    browseCapabilities.forEach(function(browseCapability) {
+        browseCapability.open(openDirectory, fatal_error);
+    });
+}
+
+/**
+ * Open a directory and add all its entries to the UI
+ * @param  {Directory} Directory
+ * @return {undefined}
+ */
+function openDirectory(directory)
+{
+    directory.entries.forEach(function(entryURL){
+        directory.open(entryURL, function(entry){
+            songinfo.innerHTML += build_entry_ui(entry);
+        }, fatal_error);
+    });
+}
 
 /**
  * Show a fatal error to the user
@@ -161,7 +197,7 @@ function build_directory_ui(data)
  */
 function build_song_ui(data)
 {
-    data.title = data.title || data.location.split('/').pop().split('.')[0];
+    data.title = data.title || data.location.split('/').pop().split('.')[0].capitalize();
     data.length = data.length || 'Unknown length';
     data.artist = data.artist || 'Unknown artist';
 
