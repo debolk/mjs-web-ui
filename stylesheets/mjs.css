@@ -155,7 +155,7 @@ header a, footer a {
     display: inline-block;
 }
 
-.entry .extra {
+.entry .artist {
     font-size: 75%;
     color: gray;
 }
