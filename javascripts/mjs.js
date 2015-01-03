@@ -152,7 +152,7 @@ function build_directory_ui(data)
 
 function build_song_ui(data)
 {
-    data.title = data.title || 'Unknown title';
+    data.title = data.title || data.location.split('/').pop().split('.')[0];
     data.length = data.length || 'Unknown length';
     data.artist = data.artist || 'Unknown artist';
 
