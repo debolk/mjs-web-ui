@@ -58,5 +58,5 @@ Cursor.prototype = {
             entry.classList.remove('cursor');
         });
         element.classList.add('cursor');
-    }
+    },
 };

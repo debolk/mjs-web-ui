@@ -139,6 +139,11 @@ function build_entry_ui(data)
     }
 }
 
+/**
+ * Builds the UI element for a directory
+ * @param  {array} data the data object describing the directory
+ * @return {String}      the rendered HTML
+ */
 function build_directory_ui(data)
 {
     data.name = (data.name == 'unknown' ? 'Unknown album' : data.name);
@@ -149,6 +154,11 @@ function build_directory_ui(data)
             </div>';
 }
 
+/**
+ * Builds the UI element for a song
+ * @param  {array} data the data object describing the song
+ * @return {String}      the rendered HTML
+ */
 function build_song_ui(data)
 {
     data.title = data.title || data.location.split('/').pop().split('.')[0];
@@ -164,6 +174,10 @@ function build_song_ui(data)
             </div>';
 }
 
+/**
+ * Starts keyboard navigation throughout songinfo and playlist
+ * @return {undefined}
+ */
 function initiate_keyboard_navigation()
 {
     var a = document.querySelector('#songinfo .entry');
