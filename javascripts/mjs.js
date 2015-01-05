@@ -35,13 +35,13 @@ function initiatePlayer(player)
 function enableControls(player)
 {
     // Bind click handlers to button
-    document.getElementById('control-clear').addEventListener('click', player.clear);
-    document.getElementById('control-search').addEventListener('click', player.search);
-    document.getElementById('control-shuffle').addEventListener('click', player.shuffle);
-    document.getElementById('control-previous').addEventListener('click', player.previous);
-    document.getElementById('control-stop').addEventListener('click', player.stop);
-    document.getElementById('control-play').addEventListener('click', player.play);
-    document.getElementById('control-forward').addEventListener('click', player.next);
+    // button_handler(document.getElementById('control-clear'), player.clear);
+    // button_handler(document.getElementById('control-search'), player.search);
+    // button_handler(document.getElementById('control-shuffle'), player.shuffle);
+    button_handler(document.getElementById('control-previous'), player.previous);
+    button_handler(document.getElementById('control-stop'), player.stop);
+    button_handler(document.getElementById('control-play'), player.play);
+    button_handler(document.getElementById('control-forward'), player.next);
 
     // Add keyboard controls
     document.addEventListener('keyup', function(event){
@@ -85,6 +85,14 @@ function enableControls(player)
         event = document.createEvent('HTMLEvents');
         event.initEvent('click', true, false);
         el.dispatchEvent(event);
+    });
+}
+
+function button_handler(button, callback)
+{
+    button.addEventListener('click', function(event){
+        event.preventDefault();
+        callback.apply(window.player, [function(){}, function(){}]);
     });
 }
 
