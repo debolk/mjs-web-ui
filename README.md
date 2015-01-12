@@ -1,4 +1,4 @@
 MJS-web-ui
 ==========
 
-A dummy web interface implementation of the MJS user interface.
+A web interface for controlling MJS players and browsing music through the musicbrainz server.
