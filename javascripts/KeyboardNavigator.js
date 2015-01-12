@@ -1,3 +1,10 @@
+/**
+ * Creates a new KeyboardNavigator
+ * @constructor
+ * @param {HTMLelement} pointer  the HTML element at which we start, must be identical to either the songinfo or playlist argument
+ * @param {HTMLelement} songinfo the HTML element at which the songinfo list starts
+ * @param {HTMLelement} playlist the HTML element at which the playlist starts
+ */
 function KeyboardNavigator(pointer, songinfo, playlist){
     songinfo = new Cursor(songinfo);
     playlist = new Cursor(playlist);
@@ -9,6 +16,10 @@ function KeyboardNavigator(pointer, songinfo, playlist){
     this.current_cursor._set_cursor(this.current_cursor.element);
 };
 
+/**
+ * Class definition of KeyboardNavigator
+ * @class
+ */
 KeyboardNavigator.prototype = {
     cursors: undefined,
     current_cursor: undefined,
@@ -27,11 +38,20 @@ KeyboardNavigator.prototype = {
     },
 };
 
+/**
+ * Creates a Cursor object
+ * @constructor
+ * @param {HTMLelement} element the HTML element this cursor initially points to
+ */
 function Cursor(element)
 {
     this.element = element;
 }
 
+/**
+ * Cursor class definition
+ * @class
+ */
 Cursor.prototype = {
     element: undefined,
     next: undefined,
