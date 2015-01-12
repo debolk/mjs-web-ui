@@ -2,6 +2,27 @@
 document.addEventListener('DOMContentLoaded', function(){
 
     // Authorize usage over OAUTH
+    getAccessToken();
+
+    // Initiate music master control
+    window.mjs = new MusicMaster('http://www.delftelectronics.nl/musicmaster/');
+
+    // Load top-level directory entries and display them
+    var songinfo = document.querySelector('#songinfo .songs');
+    mjs.files.listBrowse(processBrowseCapabilities, fatal_error);
+
+    // Load the player
+    mjs.players.getMjs(function(players){
+        initiatePlayer(players[0]);
+    });
+});
+
+/**
+ * Retrieves an access token from the OAuth authorization server
+ * @return {undefined}
+ */
+function getAccessToken()
+{
     var oauth = new OAuth('https://auth.debolk.nl',
                           'mjs-web-ui-development',
                           'CNKewWhCu6',
@@ -19,19 +40,7 @@ document.addEventListener('DOMContentLoaded', function(){
             fatal_error('Authentication failed. You are probably not authorised to use this.')
         }
     });
-
-    // Initiate music master control
-    window.mjs = new MusicMaster('http://www.delftelectronics.nl/musicmaster/');
-
-    // Load top-level directory entries and display them
-    var songinfo = document.querySelector('#songinfo .songs');
-    mjs.files.listBrowse(processBrowseCapabilities, fatal_error);
-
-    // Load the player
-    mjs.players.getMjs(function(players){
-        initiatePlayer(players[0]);
-    });
-});
+}
 
 /**
  * Initiate a player object
