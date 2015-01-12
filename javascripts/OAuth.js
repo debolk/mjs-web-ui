@@ -29,30 +29,32 @@ OAuth.prototype = {
      */
     check: function() {
 
-        // Decode URL parameter
-        var authorization_token = decodeURI((RegExp('code=' + '(.+?)(&|$)').exec(location.search)||[,null])[1]);
-        if (authorization_token == 'null') { // Correct
-            // Not authenticated, must login (this redirects the page)
-            window.location = this.endpoint + '/authorize?response_type=code'
-                                + '&client_id=' + this.client_id + '&client_pass=' + this.client_secret
-                                + '&redirect_uri=' + this.redirect_uri + '&state=1';
-            return null;
-        }
-
-        // Call the authorization endpoint over AJAX
-        var request = new XMLHttpRequest();
-        request.open('POST', this.endpoint + '/token', true);
-        request.responseType = 'json';
-        request.setRequestHeader('Content-Type', 'application/json; charset=UTF-8');
-        var data = {
-            grant_type: 'authorization_code',
-            code: authorization_token,
-            redirect_uri: this.redirect_uri,
-            client_id: this.client_id,
-            client_secret: this.client_secret,
-        }
-
         var promise = new Promise(function(resolve, reject){
+
+            // Decode URL parameter
+            var authorization_token = decodeURI((RegExp('code=' + '(.+?)(&|$)').exec(location.search)||[,null])[1]);
+            if (authorization_token == 'null') { // Correct
+                // Not authenticated, must login (this redirects the page)
+                window.location = this.endpoint + '/authorize?response_type=code'
+                                    + '&client_id=' + this.client_id + '&client_pass=' + this.client_secret
+                                    + '&redirect_uri=' + this.redirect_uri + '&state=1';
+                reject('login_redirection');
+                return;
+            }
+
+            // Call the authorization endpoint over AJAX
+            var request = new XMLHttpRequest();
+            request.open('POST', this.endpoint + '/token', true);
+            request.responseType = 'json';
+            request.setRequestHeader('Content-Type', 'application/json; charset=UTF-8');
+            var data = {
+                grant_type: 'authorization_code',
+                code: authorization_token,
+                redirect_uri: this.redirect_uri,
+                client_id: this.client_id,
+                client_secret: this.client_secret,
+            }
+
             request.onload = function() {
               if (this.status >= 200 && this.status < 400) {
                 resolve(this.response.access_token);
@@ -65,9 +67,10 @@ OAuth.prototype = {
             request.onerror = function() {
                 reject(this);
             };
-        });
 
-        request.send(JSON.stringify(data));
+            request.send(JSON.stringify(data));
+        }.bind(this));
+
         return promise;
     }
 };

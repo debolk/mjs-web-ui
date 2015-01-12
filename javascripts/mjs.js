@@ -12,7 +12,12 @@ document.addEventListener('DOMContentLoaded', function(){
         window.access_token = access_token;
         history.pushState(null, '', 'http://mjswebui.dev/');
     }, function(error){
-        fatal_error('Authentication failed. You are probably not authorised to use this.')
+        if (error === 'login_redirection') {
+            return;
+        }
+        else {
+            fatal_error('Authentication failed. You are probably not authorised to use this.')
+        }
     });
 
     // Initiate music master control
