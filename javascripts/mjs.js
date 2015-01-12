@@ -1,6 +1,20 @@
 // Start behaviour when DOM is ready
 document.addEventListener('DOMContentLoaded', function(){
 
+    // Authorize usage over OAUTH
+    var oauth = new OAuth('https://auth.debolk.nl',
+                          'mjs-web-ui-development',
+                          'CNKewWhCu6',
+                          'http://mjswebui.dev/',
+                          'mp3control');
+    var authorization = oauth.check();
+    authorization.then(function(access_token){
+        window.access_token = access_token;
+        history.pushState(null, '', 'http://mjswebui.dev/');
+    }, function(error){
+        fatal_error('Authentication failed. You are probably not authorised to use this.')
+    });
+
     // Initiate music master control
     window.mjs = new MusicMaster('http://www.delftelectronics.nl/musicmaster/');
 
