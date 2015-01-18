@@ -47,7 +47,7 @@ function getAccessToken()
                           MJSWebUI.config.oauth.resource);
     var authorization = oauth.check();
     authorization.then(function(access_token){
-        window.access_token = access_token;
+        MusicMaster.accessToken = access_token;
         history.pushState(null, '', 'http://mjswebui.dev/');
     }, function(error){
         if (error === 'login_redirection') {
@@ -68,8 +68,20 @@ function initiatePlayer(player)
 {
     window.player = player;
 
-    player.getPlaylist(showPlaylist, fatal_error);
-    enableControls(player);
+    player.initialize(function(){
+        console.log('init done');
+        enableControls(player);
+        setTimeout(updatePlayerState, 1000);
+    }, fatal_error, false);
+}
+
+function updatePlayerState()
+{
+    player.update(function(result){
+        console.log('update done');
+        console.log(result);
+        setTimeout(updatePlayerState, 1000);
+    }, fatal_error, true);
 }
 
 /**
@@ -141,10 +153,9 @@ function button_handler(button, callback)
     });
 }
 
-function showPlaylist(playlist)
+function showPlaylist()
 {
-    window.playlist = playlist;
-    playlist.items.forEach(function(playlistItem){
+    player.playlist.items.forEach(function(playlistItem){
         playlistItem.getSong(function(song){
             document.getElementById('playlist').innerHTML += build_entry_ui(song);
         }, function(error) {
@@ -334,5 +345,11 @@ function reset_keyboard_navigation()
 function navigate_to_cursor()
 {
     var element = document.querySelector('.cursor');
-    openDirectory(element.entry);
+
+    if (element.classList.contains('song')) {
+        window.player.playlist.append(element.entry, function(){}, fatal_error);
+    }
+    else {  // Directory, Up
+        openDirectory(element.entry);
+    }
 }
