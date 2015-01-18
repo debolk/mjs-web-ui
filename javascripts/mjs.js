@@ -188,12 +188,8 @@ function openDirectory(directory)
 
     // Append a Up()-call if needed
     if (directory.previous) {
-        var up = build_up_entry(directory.previous);
-        songinfo.appendChild(up);
-        console.log(up);
+        songinfo.appendChild(build_up_entry(directory.previous));
     }
-
-    console.log(directory);
 
     directory.entries.forEach(function(entryURL){
         directory.open(entryURL, function(entry){
