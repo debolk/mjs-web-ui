@@ -183,13 +183,36 @@ function processBrowseCapabilities(browseCapabilities)
  */
 function openDirectory(directory)
 {
+    // Clear the list
     songinfo.innerHTML = '';
+
+    // Append a Up()-call if needed
+    if (directory.previous) {
+        var up = build_up_entry(directory.previous);
+        songinfo.appendChild(up);
+        console.log(up);
+    }
+
+    console.log(directory);
+
     directory.entries.forEach(function(entryURL){
         directory.open(entryURL, function(entry){
             var element = build_entry_ui(entry);
             songinfo.appendChild(element);
         }, fatal_error);
     });
+
+    reset_keyboard_navigation();
+}
+
+function build_up_entry(directory)
+{
+    var up = document.createElement('div');
+    up.classList.add('entry', 'up');
+    up.entry = directory;
+    up.innerHTML ='<img src="images/directory.svg" alt="Directory" class="icon"> \
+                        <span class="title">&hellip;</span>';
+    return up;
 }
 
 /**
