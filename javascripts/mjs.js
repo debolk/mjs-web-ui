@@ -69,6 +69,7 @@ function initiatePlayer(player)
     player.initialize(function(){
         console.log('init done');
         enableControls(player);
+        makeDropTarget();
         setTimeout(updatePlayerState, 1000);
     }, fatal_error, false);
 }
@@ -80,6 +81,21 @@ function updatePlayerState()
         console.log(result);
         setTimeout(updatePlayerState, 1000);
     }, fatal_error, true);
+}
+
+function makeDropTarget()
+{
+    var playlist = document.getElementById('playlist');
+    playlist.addEventListener('dragenter', function(event) {
+        event.preventDefault();
+    });
+    playlist.addEventListener('dragover', function(event) {
+        event.preventDefault();
+    });
+    playlist.addEventListener('drop', function(event){
+        var data = event.dataTransfer.getData('application/mjs+song');
+        event.preventDefault();
+    });
 }
 
 /**
@@ -171,6 +187,10 @@ function build_up_entry(directory)
     up.entry = directory;
     up.innerHTML ='<img src="images/directory.svg" alt="Directory" class="icon"> \
                         <span class="title">&hellip;</span>';
+    up.addEventListener('click', function(event){
+        event.preventDefault();
+        openDirectory(this.entry);
+    });
     return up;
 }
 
@@ -227,6 +247,11 @@ function build_directory_ui(data)
     element.entry = data;
     element.innerHTML ='<img src="images/directory.svg" alt="Directory" class="icon"> \
                         <span class="title">' + data.name + '</span>';
+
+    element.addEventListener('click', function(event){
+        event.preventDefault();
+        openDirectory(this.entry);
+    });
     return element;
 }
 
@@ -237,9 +262,9 @@ function build_directory_ui(data)
  */
 function build_song_ui(data)
 {
+    // Normalize some data for displaying
     data.title = data.title || data.location.split('/').pop().split('.')[0].capitalize();
     data.artist = data.artist || 'Unknown artist';
-
     if (data.length) {
         var minutes = Math.floor(data.length / 60);
         var seconds = data.length % 60;
@@ -249,6 +274,7 @@ function build_song_ui(data)
         data.length = "Unknown length";
     }
 
+    // Create new element
     var element = document.createElement('div');
     element.classList.add('entry', 'song');
     element.entry = data;
@@ -257,17 +283,12 @@ function build_song_ui(data)
                         <span class="length">' + data.length + '</span> \
                         <br> \
                         <span class="artist">' + data.artist + '</span> ';
+
+    // Define element behaviour
+    element.draggable = true;
+    element.addEventListener('dragstart', function(event){
+        event.dataTransfer.setData('application/mjs+song', this.entry);
+    });
+
     return element;
-}
-
-function navigate_to_cursor()
-{
-    var element = document.querySelector('.cursor');
-
-    if (element.classList.contains('song')) {
-        window.player.playlist.append(element.entry, function(){}, fatal_error);
-    }
-    else {  // Directory, Up
-        openDirectory(element.entry);
-    }
 }

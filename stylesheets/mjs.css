@@ -180,3 +180,16 @@ input[type="search"] {
     margin-bottom: 0.5em;
     width: 100%;
 }
+
+/* Drag and drop controls */
+.directory, .up {
+    cursor: pointer;
+}
+
+.song {
+    cursor: grab;
+}
+
+#playlist:-moz-drag-over {
+  background-color: #ffccbb;
+}
