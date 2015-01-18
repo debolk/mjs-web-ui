@@ -24,7 +24,9 @@ document.addEventListener('DOMContentLoaded', function(){
 
 function config_check()
 {
-
+    if (window.MJSWebUI === undefined || window.MJSWebUI.config === undefined) {
+        fatal_error('Configuration object is missing');
+    }
 }
 
 /**
