@@ -5,7 +5,7 @@ document.addEventListener('DOMContentLoaded', function(){
     getAccessToken();
 
     // Initiate music master control
-    window.mjs = new MusicMaster('http://www.delftelectronics.nl/musicmaster/');
+    window.mjs = new MusicMaster(MJSWebUI.config.mjs.endpoint);
 
     // Load top-level directory entries and display them
     var songinfo = document.querySelector('#songinfo .songs');
@@ -23,11 +23,11 @@ document.addEventListener('DOMContentLoaded', function(){
  */
 function getAccessToken()
 {
-    var oauth = new OAuth('https://auth.debolk.nl',
-                          'mjs-web-ui-development',
-                          'CNKewWhCu6',
-                          'http://mjswebui.dev/',
-                          'mp3control');
+    var oauth = new OAuth(MJSWebUI.config.oauth.endpoint,
+                          MJSWebUI.config.oauth.client_id,
+                          MJSWebUI.config.oauth.client_secret,
+                          MJSWebUI.config.oauth.redirect_uri,
+                          MJSWebUI.config.oauth.resource);
     var authorization = oauth.check();
     authorization.then(function(access_token){
         window.access_token = access_token;
