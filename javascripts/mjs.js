@@ -46,7 +46,7 @@ function getAccessToken()
     var authorization = oauth.check();
     authorization.then(function(access_token){
         MusicMaster.accessToken = access_token;
-        history.pushState(null, '', 'http://mjswebui.dev/');
+        history.pushState(null, '', MJSWebUI.config.oauth.redirect_uri);
     }, function(error){
         if (error === 'login_redirection') {
             return;
