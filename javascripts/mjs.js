@@ -18,8 +18,6 @@ document.addEventListener('DOMContentLoaded', function(){
     mjs.players.getMjs(function(players){
         initiatePlayer(players[0]);
     });
-
-    initiate_keyboard_navigation();
 });
 
 /**
@@ -99,50 +97,6 @@ function enableControls(player)
     button_handler(document.getElementById('control-stop'), player.stop);
     button_handler(document.getElementById('control-play'), player.play);
     button_handler(document.getElementById('control-forward'), player.next);
-
-    // Add keyboard controls
-    document.addEventListener('keyup', function(event){
-        var el;
-        switch (event.keyCode)
-        {
-            case 67:    // C - clear
-            {
-                el = document.getElementById('control-clear'); break;
-            }
-            case 70:    // F - search (find)
-            {
-                el = document.getElementById('control-search'); break;
-            }
-            case 83:    // S - stop
-            {
-                el = document.getElementById('control-stop'); break;
-            }
-            case 37:    // Left - previous song
-            {
-                el = document.getElementById('control-previous'); break;
-            }
-            case 72:    // H - stop (halt)
-            {
-                el = document.getElementById('control-stop'); break;
-            }
-            case 32:    // Space - play/pause
-            {
-                el = document.getElementById('control-play'); break;
-            }
-            case 39:    // Right - forward song
-            {
-                el = document.getElementById('control-forward'); break;
-            }
-            default:
-            {
-                return; // KeyCode not caught, proceed normally
-            }
-        }
-        event.preventDefault();
-        event = document.createEvent('HTMLEvents');
-        event.initEvent('click', true, false);
-        el.dispatchEvent(event);
-    });
 }
 
 function button_handler(button, callback)
@@ -208,8 +162,6 @@ function openDirectory(directory)
             songinfo.appendChild(element);
         }, fatal_error);
     });
-
-    reset_keyboard_navigation();
 }
 
 function build_up_entry(directory)
@@ -306,48 +258,6 @@ function build_song_ui(data)
                         <br> \
                         <span class="artist">' + data.artist + '</span> ';
     return element;
-}
-
-/**
- * Starts keyboard navigation throughout songinfo and playlist
- * @return {undefined}
- */
-function initiate_keyboard_navigation()
-{
-    window.keyboardNavigator = new KeyboardNavigator(document.querySelector('#songinfo'),
-                                                     document.querySelector('#playlist'));
-
-    document.addEventListener('keyup', function(event){
-        switch (event.keyCode)
-        {
-            case 40:    // arrow down
-            {
-                keyboardNavigator.next(); break;
-            }
-            case 38:    // arrow up
-            {
-                keyboardNavigator.previous(); break;
-            }
-            case 9:    // Tab
-            {
-                keyboardNavigator.switch(); break;
-            }
-            case 13:    // Enter
-            {
-                navigate_to_cursor(); break;
-            }
-            default:
-            {
-                return; // KeyCode not caught, proceed normally
-            }
-        }
-        event.preventDefault();
-    });
-}
-
-function reset_keyboard_navigation()
-{
-    window.keyboardNavigator.reset();
 }
 
 function navigate_to_cursor()
