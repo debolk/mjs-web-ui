@@ -4,7 +4,7 @@ document.addEventListener('DOMContentLoaded', function(){
     // Check for configuration
     config_check();
 
-    // Authorize usage over OAUTH
+    // Authorize usage over OAuth
     getAccessToken();
 
     // Initiate music master control
