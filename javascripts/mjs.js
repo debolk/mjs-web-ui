@@ -268,6 +268,9 @@ function build_song_ui(data)
     if (data.length) {
         var minutes = Math.floor(data.length / 60);
         var seconds = data.length % 60;
+        if (seconds < 10) {
+            seconds = "0" + seconds;
+        }
         data.length = minutes + ":" + seconds;
     }
     else {
