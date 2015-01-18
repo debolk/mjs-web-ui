@@ -286,8 +286,16 @@ function build_directory_ui(data)
 function build_song_ui(data)
 {
     data.title = data.title || data.location.split('/').pop().split('.')[0].capitalize();
-    data.length = data.length || 'Unknown length';
     data.artist = data.artist || 'Unknown artist';
+
+    if (data.length) {
+        var minutes = Math.floor(data.length / 60);
+        var seconds = data.length % 60;
+        data.length = minutes + ":" + seconds;
+    }
+    else {
+        data.length = "Unknown length";
+    }
 
     var element = document.createElement('div');
     element.classList.add('entry', 'song');
