@@ -18,6 +18,8 @@ document.addEventListener('DOMContentLoaded', function(){
     mjs.players.getMjs(function(players){
         initiatePlayer(players[0]);
     });
+
+    initiate_keyboard_navigation();
 });
 
 function config_check()
@@ -188,6 +190,7 @@ function openDirectory(directory)
  */
 function fatal_error(details)
 {
+    console.error(details);
     alert('Fatal error\n\nTechnical details: '+details.toString());
 }
 
@@ -260,9 +263,9 @@ function build_song_ui(data)
  */
 function initiate_keyboard_navigation()
 {
-    var a = document.querySelector('#songinfo .entry');
-    var b = document.querySelector('#playlist .entry');
-    var keyboardNavigator = new KeyboardNavigator(a, a, b);
+    window.keyboardNavigator = new KeyboardNavigator(document.querySelector('#songinfo'),
+                                                     document.querySelector('#playlist'));
+
     document.addEventListener('keyup', function(event){
         switch (event.keyCode)
         {
@@ -285,4 +288,9 @@ function initiate_keyboard_navigation()
         }
         event.preventDefault();
     });
+}
+
+function reset_keyboard_navigation()
+{
+    window.keyboardNavigator.reset();
 }

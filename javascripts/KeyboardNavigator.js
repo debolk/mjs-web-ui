@@ -1,11 +1,10 @@
 /**
  * Creates a new KeyboardNavigator
  * @constructor
- * @param {HTMLelement} pointer  the HTML element at which we start, must be identical to either the songinfo or playlist argument
- * @param {HTMLelement} songinfo the HTML element at which the songinfo list starts
- * @param {HTMLelement} playlist the HTML element at which the playlist starts
+ * @param {HTMLelement} songinfo the songinfo list
+ * @param {HTMLelement} playlist the playlist
  */
-function KeyboardNavigator(pointer, songinfo, playlist){
+function KeyboardNavigator(songinfo, playlist){
     songinfo = new Cursor(songinfo);
     playlist = new Cursor(playlist);
     songinfo.next = playlist;
@@ -13,7 +12,6 @@ function KeyboardNavigator(pointer, songinfo, playlist){
 
     this.cursors = [songinfo, playlist];
     this.current_cursor = songinfo;
-    this.current_cursor._set_cursor(this.current_cursor.element);
 };
 
 /**
@@ -21,12 +19,12 @@ function KeyboardNavigator(pointer, songinfo, playlist){
  * @class
  */
 KeyboardNavigator.prototype = {
-    cursors: undefined,
-    current_cursor: undefined,
+    cursors: null,
+    current_cursor: null,
 
     switch: function() {
         this.current_cursor = this.current_cursor.next;
-        this.current_cursor._set_cursor(this.current_cursor.element);
+        this.current_cursor._set_cursor();
     },
 
     next: function() {
@@ -36,6 +34,11 @@ KeyboardNavigator.prototype = {
     previous: function() {
         this.current_cursor.retreat();
     },
+
+    reset: function() {
+        this.current_cursor = this.cursors[0];
+        this.current_cursor._select_first();
+    }
 };
 
 /**
@@ -43,12 +46,12 @@ KeyboardNavigator.prototype = {
  * @constructor
  * @param {HTMLelement} element the HTML element this cursor initially points to
  */
-function Cursor(element)
+function Cursor(list)
 {
-    this.element = null;
-    if (element) {
-        this.element = element;
-    }
+    this.list = list;
+
+    // Select the first element if present
+    this.advance();
 }
 
 /**
@@ -56,30 +59,48 @@ function Cursor(element)
  * @class
  */
 Cursor.prototype = {
-    element: undefined,
-    next: undefined,
+    list: null,
+    element: null,
+    next: null,
 
     advance: function() {
+        if (this.element === null) {
+            return this._select_first();
+        }
         if (this.element.nextElementSibling === null) {
             return;
         }
         this.element = this.element.nextElementSibling;
-        this._set_cursor(this.element);
+        this._set_cursor();
     },
 
     retreat: function() {
+        if (this.element === null) {
+            return this._select_first();
+        }
         if (this.element.previousElementSibling === null) {
             return;
         }
         this.element = this.element.previousElementSibling;
-        this._set_cursor(this.element);
+        this._set_cursor();
     },
 
-    _set_cursor: function(element) {
+    _set_cursor: function() {
+        if (this.element === null) {
+            return this._select_first();
+        }
+
         var entries = document.querySelectorAll('.entry');
         Array.prototype.forEach.call(entries, function(entry, i) {
             entry.classList.remove('cursor');
         });
-        element.classList.add('cursor');
+        this.element.classList.add('cursor');
+    },
+
+    _select_first: function() {
+        if (this.list.children.length > 0) {
+            this.element = this.list.children[0];
+            this._set_cursor();
+        }
     },
 };
