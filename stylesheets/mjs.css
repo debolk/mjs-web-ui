@@ -151,10 +151,6 @@ header a, footer a {
     background-color: #8cc;
 }
 
-.entry span {
-    display: inline-block;
-}
-
 .entry .artist {
     font-size: 75%;
     color: gray;
