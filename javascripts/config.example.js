@@ -1,4 +1,4 @@
-window.MJSWebUI = windows.MJSWebUI || {};
+window.MJSWebUI = window.MJSWebUI || {};
 MJSWebUI.config = {
     mjs: {
         endpoint: '',

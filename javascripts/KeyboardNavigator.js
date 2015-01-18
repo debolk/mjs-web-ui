@@ -45,7 +45,10 @@ KeyboardNavigator.prototype = {
  */
 function Cursor(element)
 {
-    this.element = element;
+    this.element = null;
+    if (element) {
+        this.element = element;
+    }
 }
 
 /**

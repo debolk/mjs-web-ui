@@ -1,6 +1,9 @@
 // Start behaviour when DOM is ready
 document.addEventListener('DOMContentLoaded', function(){
 
+    // Check for configuration
+    config_check();
+
     // Authorize usage over OAUTH
     getAccessToken();
 
@@ -16,6 +19,11 @@ document.addEventListener('DOMContentLoaded', function(){
         initiatePlayer(players[0]);
     });
 });
+
+function config_check()
+{
+
+}
 
 /**
  * Retrieves an access token from the OAuth authorization server
