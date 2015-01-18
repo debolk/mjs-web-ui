@@ -183,9 +183,11 @@ function processBrowseCapabilities(browseCapabilities)
  */
 function openDirectory(directory)
 {
+    songinfo.innerHTML = '';
     directory.entries.forEach(function(entryURL){
         directory.open(entryURL, function(entry){
-            songinfo.innerHTML += build_entry_ui(entry);
+            var element = build_entry_ui(entry);
+            songinfo.appendChild(element);
         }, fatal_error);
     });
 }
@@ -232,16 +234,18 @@ function build_entry_ui(data)
 /**
  * Builds the UI element for a directory
  * @param  {array} data the data object describing the directory
- * @return {String}      the rendered HTML
+ * @return {HTMLelement}      the rendered HTML
  */
 function build_directory_ui(data)
 {
     data.name = (data.name == 'unknown' ? 'Unknown album' : data.name);
 
-    return '<div class="entry directory"> \
-                <img src="images/directory.svg" alt="Directory" class="icon"> \
-                <span class="title">' + data.name + '</span> \
-            </div>';
+    var element = document.createElement('div');
+    element.classList.add('entry', 'directory');
+    element.entry = data;
+    element.innerHTML ='<img src="images/directory.svg" alt="Directory" class="icon"> \
+                        <span class="title">' + data.name + '</span>';
+    return element;
 }
 
 /**
@@ -255,13 +259,15 @@ function build_song_ui(data)
     data.length = data.length || 'Unknown length';
     data.artist = data.artist || 'Unknown artist';
 
-    return '<div class="entry song"> \
-                <img src="images/song.svg" alt="Song" class="icon"> \
-                <span class="title">' + data.title + '</span> \
-                <span class="length">' + data.length + '</span> \
-                <br> \
-                <span class="artist">' + data.artist + '</span> \
-            </div>';
+    var element = document.createElement('div');
+    element.classList.add('entry', 'song');
+    element.entry = data;
+    element.innerHTML ='<img src="images/song.svg" alt="Song" class="icon"> \
+                        <span class="title">' + data.title + '</span> \
+                        <span class="length">' + data.length + '</span> \
+                        <br> \
+                        <span class="artist">' + data.artist + '</span> ';
+    return element;
 }
 
 /**
@@ -288,6 +294,10 @@ function initiate_keyboard_navigation()
             {
                 keyboardNavigator.switch(); break;
             }
+            case 13:    // Enter
+            {
+                navigate_to_cursor(); break;
+            }
             default:
             {
                 return; // KeyCode not caught, proceed normally
@@ -300,4 +310,10 @@ function initiate_keyboard_navigation()
 function reset_keyboard_navigation()
 {
     window.keyboardNavigator.reset();
+}
+
+function navigate_to_cursor()
+{
+    var element = document.querySelector('.cursor');
+    openDirectory(element.entry);
 }
