@@ -22,10 +22,15 @@ document.addEventListener('DOMContentLoaded', function(){
     initiate_keyboard_navigation();
 });
 
+/**
+ * Checks if the required configuration object is present
+ * @return {undefined}
+ */
 function config_check()
 {
     if (window.MJSWebUI === undefined || window.MJSWebUI.config === undefined) {
         fatal_error('Configuration object is missing');
+        throw new Error('Configuration object is missing');
     }
 }
 
