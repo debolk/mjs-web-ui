@@ -86,15 +86,17 @@ function updatePlayerState()
 function makeDropTarget()
 {
     var playlist = document.getElementById('playlist');
+
     playlist.addEventListener('dragenter', function(event) {
         event.preventDefault();
     });
     playlist.addEventListener('dragover', function(event) {
         event.preventDefault();
     });
+
     playlist.addEventListener('drop', function(event){
-        var data = event.dataTransfer.getData('application/mjs+song');
         event.preventDefault();
+        var data = JSON.parse(event.dataTransfer.getData('application/json'));
     });
 }
 
@@ -290,7 +292,7 @@ function build_song_ui(data)
     // Define element behaviour
     element.draggable = true;
     element.addEventListener('dragstart', function(event){
-        event.dataTransfer.setData('application/mjs+song', this.entry);
+        event.dataTransfer.setData("application/json", JSON.stringify(this.entry));
     });
 
     return element;
