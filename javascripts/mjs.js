@@ -66,6 +66,9 @@ function initiatePlayer(player)
 {
     window.player = player;
 
+    showLoader(document.getElementById('songinfo'));
+    showLoader(document.getElementById('playlist'));
+
     player.initialize(function(){
         console.log('init done');
         enableControls(player);
@@ -296,4 +299,14 @@ function build_song_ui(data)
     });
 
     return element;
+}
+
+/**
+ * Clear the element and show a loading icon in it
+ * @param  {HTMLelement} element the element to replace
+ * @return {undefined}
+ */
+function showLoader(element)
+{
+    element.innerHTML = '<img src="images/loader.gif" width=128 height=15 class=loader />';
 }
