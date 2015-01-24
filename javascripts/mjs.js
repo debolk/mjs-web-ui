@@ -97,10 +97,14 @@ function makeDropTarget()
         event.preventDefault();
     });
 
-    playlist.addEventListener('drop', function(event){
-        event.preventDefault();
-        var data = JSON.parse(event.dataTransfer.getData('application/json'));
-    });
+    playlist.addEventListener('drop', dropSongOnPlaylist);
+}
+
+function dropSongOnPlaylist(event)
+{
+    event.preventDefault();
+    var data = JSON.parse(event.dataTransfer.getData('application/json'));
+    console.log(data);
 }
 
 /**
