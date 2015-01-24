@@ -313,4 +313,7 @@ function build_song_ui(data)
 function showLoader(element)
 {
     element.innerHTML = '<img src="images/loader.gif" width=128 height=15 class=loader />';
+    setTimeout(function(element){
+        element.innerHTML += '<p class="loader-explanation">This is taking longer than expected. Is it turned on?</p>';
+    }, 5000, element);
 }
