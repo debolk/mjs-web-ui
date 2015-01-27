@@ -59,9 +59,9 @@ footer {
 /* main interface sections*/
 section {
     padding: 1em;
-    float: left;
     width: 50%;
     overflow: auto;
+    position: absolute;
 }
 
 #songinfo {
@@ -72,10 +72,16 @@ section {
 #controls {
     padding: 1em;
     border-bottom: 1px solid darkgray;
+    left: 50%;
+    height: 6em;
 }
 
 #playlist {
-    height: 60%;
+    left: 50%;
+    height: 100%;
+    height: calc(100% - 6em);
+    top: 6em;
+    overflow: scroll;
 }
 
 /* random content elements */

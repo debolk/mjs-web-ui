@@ -66,8 +66,32 @@ function initiatePlayer(player)
 {
     window.player = player;
 
+    var remove = function(item, index){
+        var root = document.getElementById('playlist');
+        var entry = root.childNodes[index];
+
+        root.removeChild(entry);
+    }
+
+    var move = function(item, pindex, nindex)
+    {
+        var root = document.getElementById('playlist');
+        var entry = root.childNodes[pindex];
+
+        root.removeChild(entry);
+
+        if(root.childNodes.length == nindex)
+            root.appendChild(entry);
+        else
+            root.insertBefore(entry, root.childNodes[nindex]);
+    }
+    
     var insert = function(song, index){
+        song.onMove = move;
+        song.onRemove = remove;
+
         var playlistUI = document.getElementById('playlist');
+
         var entry = build_entry_ui(song);
         if(playlistUI.childNodes.length == index) {
             playlistUI.appendChild(entry);
