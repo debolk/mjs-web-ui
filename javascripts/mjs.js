@@ -4,7 +4,7 @@ document.addEventListener('DOMContentLoaded', function(){
     // Check for configuration
     config_check();
 
-    // Authorize usage over OAUTH
+    // Authorize usage over OAuth
     getAccessToken();
 
     // Initiate music master control
@@ -46,7 +46,7 @@ function getAccessToken()
     var authorization = oauth.check();
     authorization.then(function(access_token){
         MusicMaster.accessToken = access_token;
-        history.pushState(null, '', 'http://mjswebui.dev/');
+        history.pushState(null, '', MJSWebUI.config.oauth.redirect_uri);
     }, function(error){
         if (error === 'login_redirection') {
             return;
@@ -66,6 +66,7 @@ function initiatePlayer(player)
 {
     window.player = player;
 
+<<<<<<< HEAD
     var insert = function(song, index){
         console.log(index);
         console.log(song);
@@ -80,6 +81,10 @@ function initiatePlayer(player)
     
     player.playlist.prefetch = true;
     player.playlist.onAdd = insert;
+    
+    showLoader(document.getElementById('songinfo'));
+    showLoader(document.getElementById('playlist'));
+    makeDropTarget();
 
     enableControls(player);
     setTimeout(updatePlayerState, 1000);
@@ -92,6 +97,27 @@ function updatePlayerState()
         console.log(result);
         setTimeout(updatePlayerState, 1000);
     }, fatal_error, true);
+}
+
+function makeDropTarget()
+{
+    var playlist = document.getElementById('playlist');
+
+    playlist.addEventListener('dragenter', function(event) {
+        event.preventDefault();
+    });
+    playlist.addEventListener('dragover', function(event) {
+        event.preventDefault();
+    });
+
+    playlist.addEventListener('drop', dropSongOnPlaylist);
+}
+
+function dropSongOnPlaylist(event)
+{
+    event.preventDefault();
+    var data = JSON.parse(event.dataTransfer.getData('application/json'));
+    console.log(data);
 }
 
 /**
@@ -183,6 +209,10 @@ function build_up_entry(directory)
     up.entry = directory;
     up.innerHTML ='<img src="images/directory.svg" alt="Directory" class="icon"> \
                         <span class="title">&hellip;</span>';
+    up.addEventListener('click', function(event){
+        event.preventDefault();
+        openDirectory(this.entry);
+    });
     return up;
 }
 
@@ -239,6 +269,11 @@ function build_directory_ui(data)
     element.entry = data;
     element.innerHTML ='<img src="images/directory.svg" alt="Directory" class="icon"> \
                         <span class="title">' + data.name + '</span>';
+
+    element.addEventListener('click', function(event){
+        event.preventDefault();
+        openDirectory(this.entry);
+    });
     return element;
 }
 
@@ -249,18 +284,22 @@ function build_directory_ui(data)
  */
 function build_song_ui(data)
 {
+    // Normalize some data for displaying
     data.title = data.title || data.location.split('/').pop().split('.')[0].capitalize();
     data.artist = data.artist || 'Unknown artist';
-
     if (data.length) {
         var minutes = Math.floor(data.length / 60);
         var seconds = data.length % 60;
+        if (seconds < 10) {
+            seconds = "0" + seconds;
+        }
         data.length = minutes + ":" + seconds;
     }
     else {
         data.length = "Unknown length";
     }
 
+    // Create new element
     var element = document.createElement('div');
     element.classList.add('entry', 'song');
     element.entry = data;
@@ -269,17 +308,25 @@ function build_song_ui(data)
                         <span class="length">' + data.length + '</span> \
                         <br> \
                         <span class="artist">' + data.artist + '</span> ';
+
+    // Define element behaviour
+    element.draggable = true;
+    element.addEventListener('dragstart', function(event){
+        event.dataTransfer.setData("application/json", JSON.stringify(this.entry));
+    });
+
     return element;
 }
 
-function navigate_to_cursor()
+/**
+ * Clear the element and show a loading icon in it
+ * @param  {HTMLelement} element the element to replace
+ * @return {undefined}
+ */
+function showLoader(element)
 {
-    var element = document.querySelector('.cursor');
-
-    if (element.classList.contains('song')) {
-        window.player.playlist.append(element.entry, function(){}, fatal_error);
-    }
-    else {  // Directory, Up
-        openDirectory(element.entry);
-    }
+    element.innerHTML = '<img src="images/loader.gif" width=128 height=15 class=loader />';
+    setTimeout(function(element){
+        element.innerHTML += '<p class="loader-explanation">This is taking longer than expected. Is it turned on?</p>';
+    }, 5000, element);
 }

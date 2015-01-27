@@ -12,4 +12,4 @@ Requires a working MJS installation with plugins enabled. The interface requires
 3. Open `ìndex.html`
 
 # License
-Copyright 2015 Max Maton, Jakob Buis. All rights reserved.
+Copyright 2014-2015 Max Maton, Jakob Buis. All rights reserved.
