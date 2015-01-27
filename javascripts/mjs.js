@@ -88,7 +88,6 @@ function initiatePlayer(player)
 function updatePlayerState()
 {
     player.update(function(result){
-        console.log('update done');
         setPlayButton(window.player.status);
         setTimeout(updatePlayerState, 1000);
     }, fatal_error, true);
@@ -112,7 +111,6 @@ function dropSongOnPlaylist(event)
 {
     event.preventDefault();
     var data = JSON.parse(event.dataTransfer.getData('application/json'));
-    console.log(data);
 }
 
 /**
