@@ -93,6 +93,7 @@ function initiatePlayer(player)
         var playlistUI = document.getElementById('playlist');
 
         var entry = build_entry_ui(song);
+        entry.uri = song.uri;
         if(playlistUI.childNodes.length == index) {
             playlistUI.appendChild(entry);
         }
@@ -115,8 +116,28 @@ function updatePlayerState()
 {
     player.update(function(result){
         setPlayButton(window.player.status);
+        updatePlaylistState();
         setTimeout(updatePlayerState, 1000);
     }, fatal_error, true);
+}
+
+function updatePlaylistState()
+{
+    var currentUri = window.player.currentItem;
+    var playlistRoot = document.getElementById("playlist");
+    for(var i = 0; i < playlistRoot.childNodes.length; i++)
+    {
+        if(playlistRoot.childNodes[i].uri == currentUri)
+        {
+            var current = playlistRoot.childNodes[i];
+
+            if(playlistRoot.currentSelected !== current)
+                clear_song_progress(playlistRoot.currentSelected);
+
+            playlistRoot.currentSelected = current;
+            draw_song_progress(current, window.player.position, window.player.duration);
+        }
+    }
 }
 
 function makeDropTarget()
@@ -272,8 +293,15 @@ function fatal_error(details)
  */
 function draw_song_progress(song, current, total)
 {
-    var percentage = Math.round(100*current/total, 0);
+    var percentage = Math.ceil(100*current/total, 0);
     song.style.background = 'linear-gradient(to right,  #cdeb8e 0%,#cdeb8e '+percentage+'%,#ffffff '+percentage+'%)';
+}
+
+function clear_song_progress(song)
+{
+    if(song === undefined)
+        return;
+    song.style.background = 'white';
 }
 
 /**
