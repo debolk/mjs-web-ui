@@ -100,7 +100,7 @@ function initiatePlayer(player)
 
     player.playlist.prefetch = true;
     player.playlist.onAdd = insert;
-    
+
     showLoader(document.getElementById('songinfo'));
     makeDropTarget();
 
@@ -112,6 +112,7 @@ function updatePlayerState()
 {
     player.update(function(result){
         console.log('update done');
+        setPlayButton(window.player.status);
         setTimeout(updatePlayerState, 1000);
     }, fatal_error, true);
 }
@@ -144,21 +145,38 @@ function dropSongOnPlaylist(event)
  */
 function enableControls(player)
 {
-    // Bind click handlers to button
-    // button_handler(document.getElementById('control-clear'), player.clear);
-    // button_handler(document.getElementById('control-search'), player.search);
-    // button_handler(document.getElementById('control-shuffle'), player.shuffle);
-    button_handler(document.getElementById('control-previous'), player.previous);
-    button_handler(document.getElementById('control-stop'), player.stop);
-    button_handler(document.getElementById('control-play'), player.play);
-    button_handler(document.getElementById('control-forward'), player.next);
-}
+    // Clear button
+    //FIXME
 
-function button_handler(button, callback)
-{
-    button.addEventListener('click', function(event){
+    // Shuffle button
+    //FIXME
+
+    /*
+     * Stop button
+     */
+    document.getElementById('control-stop').addEventListener('click', function(event){
         event.preventDefault();
-        callback.apply(window.player, [function(){}, function(){}]);
+        window.player.stop(function(){}, fatal_error);
+    });
+
+    /*
+     * Play/pause button
+     */
+    var control = document.getElementById('control-play');
+    setPlayButton(window.player.status || 'stopped')
+
+    // Add click listener
+    control.addEventListener('click', function(event){
+        event.preventDefault();
+
+        if (this.state == 'playing') {
+            setPlayButton('paused');
+            window.player.pause(function(){}, fatal_error);
+        }
+        else {
+            setPlayButton('playing');
+            window.player.play(function(){}, fatal_error);
+        }
     });
 }
 
@@ -349,4 +367,21 @@ function showLoader(element)
     setTimeout(function(element){
         element.innerHTML += '<p class="loader-explanation">This is taking longer than expected. Is it turned on?</p>';
     }, 5000, element);
+}
+
+/**
+ * updates the state and UI of the play/pause button
+ * @param {String} state the status of the player, either "playing", "paused", "stopped" or something else
+ */
+function setPlayButton(state)
+{
+    var control = document.getElementById('control-play');
+    var icon = control.children[0];
+    control.state = state;
+    if (state == 'playing') {
+        icon.src = 'images/pause.svg';
+    }
+    else {
+        icon.src = 'images/play.svg';
+    }
 }
