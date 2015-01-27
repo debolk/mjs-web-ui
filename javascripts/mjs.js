@@ -67,9 +67,6 @@ function initiatePlayer(player)
     window.player = player;
 
     var insert = function(song, index){
-        console.log(index);
-        console.log(song);
-
         var root = document.getElementById('playlist');
         var entry = build_entry_ui(song);
         if(root.childNodes.length == index)
@@ -82,7 +79,6 @@ function initiatePlayer(player)
     player.playlist.onAdd = insert;
     
     showLoader(document.getElementById('songinfo'));
-    showLoader(document.getElementById('playlist'));
     makeDropTarget();
 
     enableControls(player);
@@ -93,7 +89,6 @@ function updatePlayerState()
 {
     player.update(function(result){
         console.log('update done');
-        console.log(result);
         setTimeout(updatePlayerState, 1000);
     }, fatal_error, true);
 }
@@ -283,6 +278,9 @@ function build_directory_ui(data)
  */
 function build_song_ui(data)
 {
+    if(data.song !== undefined)
+        data = data.song;
+
     // Normalize some data for displaying
     data.title = data.title || data.location.split('/').pop().split('.')[0].capitalize();
     data.artist = data.artist || 'Unknown artist';
