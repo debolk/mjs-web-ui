@@ -99,6 +99,7 @@ function makeDropTarget()
 {
     var playlist = document.getElementById('playlist');
 
+    // Do not remove, these event handlers are needed for dragging to work
     playlist.addEventListener('dragenter', function(event) {
         event.preventDefault();
     });
