@@ -69,13 +69,8 @@ section {
     border-right: 1px solid darkgray;
 }
 
-.entryinfo {
-    height: 100%;
-    border-right: 1px solid darkgray;
-}
-
 #controls {
-    height: 150px;
+    padding: 1em;
     border-bottom: 1px solid darkgray;
 }
 
@@ -110,11 +105,10 @@ header a, footer a {
     background-color: white;
     box-shadow: 0px 1px 5px rgba(0,0,0, 0.5);
     float: left;
-    height: 5em;
-    width: 5em;
+    height: 4em;
+    width: 4em;
     margin-right: 1em;
     color: darkgray;
-    font-size: 80%;
     cursor: pointer;
 }
 
@@ -126,9 +120,9 @@ header a, footer a {
 }
 
 .control img {
-    width: 3em;
-    height: 3em;
-    margin: 1em;
+    width: 2.5em;
+    height: 2.5em;
+    margin: 0.75em;
 }
 
 /*.Song and folder UI */
