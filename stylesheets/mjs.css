@@ -128,14 +128,7 @@ header a, footer a {
 .control img {
     width: 3em;
     height: 3em;
-    margin: 0.25em 1em 0 1em;
-}
-
-.control span {
-    margin-bottom: 0.25em;
-    display: block;
-    width: 95%;
-    text-align: right;
+    margin: 1em;
 }
 
 /*.Song and folder UI */
