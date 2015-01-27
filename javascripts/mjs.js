@@ -66,11 +66,23 @@ function initiatePlayer(player)
 {
     window.player = player;
 
-    player.initialize(function(){
-        console.log('init done');
-        enableControls(player);
-        setTimeout(updatePlayerState, 1000);
-    }, fatal_error, false);
+    var insert = function(song, index){
+        console.log(index);
+        console.log(song);
+
+        var root = document.getElementById('playlist');
+        var entry = build_entry_ui(song);
+        if(root.childNodes.length == index)
+            root.appendChild(entry);
+        else
+            root.insertBefore(entry, root.childNodes.length[index]);
+    }
+    
+    player.playlist.prefetch = true;
+    player.playlist.onAdd = insert;
+
+    enableControls(player);
+    setTimeout(updatePlayerState, 1000);
 }
 
 function updatePlayerState()
