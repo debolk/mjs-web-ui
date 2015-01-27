@@ -66,7 +66,6 @@ function initiatePlayer(player)
 {
     window.player = player;
 
-<<<<<<< HEAD
     var insert = function(song, index){
         console.log(index);
         console.log(song);
