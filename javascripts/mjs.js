@@ -67,12 +67,14 @@ function initiatePlayer(player)
     window.player = player;
 
     var insert = function(song, index){
-        var root = document.getElementById('playlist');
+        var playlistUI = document.getElementById('playlist');
         var entry = build_entry_ui(song);
-        if(root.childNodes.length == index)
-            root.appendChild(entry);
-        else
-            root.insertBefore(entry, root.childNodes.length[index]);
+        if(playlistUI.childNodes.length == index) {
+            playlistUI.appendChild(entry);
+        }
+        else {
+            playlistUI.insertBefore(entry, playlistUI.childNodes.length[index]);
+        }
     }
 
     player.playlist.prefetch = true;
