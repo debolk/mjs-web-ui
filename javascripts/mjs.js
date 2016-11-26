@@ -90,6 +90,8 @@ function initiatePlayer(player)
         song.onMove = move;
         song.onRemove = remove;
 
+        hideLoader();
+
         var playlistUI = document.getElementById('playlist');
 
         var entry = build_entry_ui(song);
@@ -104,8 +106,6 @@ function initiatePlayer(player)
 
     player.playlist.prefetch = true;
     player.playlist.onAdd = insert;
-
-    showLoader(document.getElementById('songinfo'));
 
     enableControls(player);
     setTimeout(updatePlayerState, 1000);
@@ -348,19 +348,6 @@ function build_song_ui(data)
                         <br> \
                         <span class="artist">' + data.artist + '</span> ';
     return element;
-}
-
-/**
- * Clear the element and show a loading icon in it
- * @param  {HTMLelement} element the element to replace
- * @return {undefined}
- */
-function showLoader(element)
-{
-    element.innerHTML = '<img src="images/loader.gif" width=128 height=15 class=loader />';
-    setTimeout(function(element){
-        element.innerHTML += '<p class="loader-explanation">This is taking longer than expected. Is it turned on?</p>';
-    }, 5000, element);
 }
 
 /**
