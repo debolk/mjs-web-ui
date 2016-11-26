@@ -131,13 +131,13 @@ function updatePlaylistState()
         {
             var current = playlistRoot.childNodes[i];
 
-            if(playlistRoot.playingSong !== undefined && playlistRoot.playingSong !== current) {
-                clear_song_progress(playlistRoot.playingSong);
+            if(playlistRoot.playingSongElement !== undefined && playlistRoot.playingSongElement !== current) {
+                clear_song_progress(playlistRoot.playingSongElement);
                 // when a new song starts playing, scroll to the previous song (showing that one and the new one on top)
-                playlistRoot.playingSong.scrollIntoView({behavior: 'smooth', block: 'start'});
+                playlistRoot.playingSongElement.scrollIntoView({behavior: 'smooth', block: 'start'});
             }
 
-            playlistRoot.playingSong = current;
+            playlistRoot.playingSongElement = current;
             draw_song_progress(current, window.player.position, window.player.duration);
         }
     }
@@ -164,7 +164,7 @@ function enableControls(player)
      */
     document.getElementById('control-shuffle').addEventListener('click', function(event){
         if (confirm("Playlist shufflen?")) {
-            var current_song = document.getElementById('playlist').playingSong;
+            var current_song = document.getElementById('playlist').playingSongElement;
             window.player.playlist.shuffle(current_song, function(){}, fatal_error);
         }
     });
