@@ -4,7 +4,7 @@ MJS-web-ui
 A web interface for controlling MJS players and browsing music through the musicbrainz server.
 
 # Technical requirements
-Requires a working MJS installation with plugins enabled. The interface requires Promises (Firefox 29+, Chrome 32+, Opera 19+ and Safari 7.1+).
+Requires a working MJS installation with plugins enabled.
 
 # Installation
 1. Checkout repository
