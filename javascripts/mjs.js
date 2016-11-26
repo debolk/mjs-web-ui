@@ -223,10 +223,37 @@ function openDirectory(directory)
 
     directory.entries.forEach(function(entryURL){
         directory.open(entryURL, function(entry){
-            var element = build_entry_ui(entry);
-            songinfo.appendChild(element);
+            if (isValidEntry(entry)) {
+                var element = build_entry_ui(entry);
+                songinfo.appendChild(element);
+            }
+            else {
+                console.log("Not a valid entry to play or open", entry);
+            }
         }, fatal_error);
     });
+}
+
+/**
+ * Check if an entry is valid for this player: must be either a directory, or a valid MP3-file.
+ * Checked by type == directory, or location ends with "/record" (tagged) or ".mp3" (mp3 file)
+ * @param  {Directory | Song}  entry
+ * @return {Boolean}
+ */
+function isValidEntry(entry) {
+    if (entry.type === 'directory') {
+        return true;
+    }
+
+    if (entry.location.substr(-6) === 'record') {
+        return true;
+    }
+
+    if (entry.location.substr(-4) === '.mp3') {
+        return true;
+    }
+
+    return false;
 }
 
 function build_up_entry(directory)
