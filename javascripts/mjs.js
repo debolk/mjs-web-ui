@@ -161,6 +161,16 @@ function enableControls(player)
     });
 
     /*
+     * Clear playlist
+     */
+    document.getElementById('control-shuffle').addEventListener('click', function(event){
+        if (confirm("Playlist shufflen?")) {
+            var current_song = document.getElementById('playlist').playingSong;
+            window.player.playlist.shuffle(current_song, function(){}, fatal_error);
+        }
+    });
+
+    /*
      * Stop button
      */
     document.getElementById('control-stop').addEventListener('click', function(event){
