@@ -298,6 +298,9 @@ function fatal_error(details)
  */
 function draw_song_progress(song, current, total)
 {
+    if (song === undefined || song.style === undefined) {
+        return;
+    }
     var percentage = Math.ceil(100*current/total, 0);
     song.style.background = 'linear-gradient(to right,  #cdeb8e 0%,#cdeb8e '+percentage+'%,#ffffff '+percentage+'%)';
 }
