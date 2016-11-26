@@ -379,8 +379,13 @@ function normalize_song_data(data) {
         data = data.song;
     }
 
-    data.title = data.title || data.location.split('/').pop().split('.')[0].capitalize();
+    if (! data.title) {
+        var filename = data.uri.split('/').pop().split('.')[0].capitalize();
+        data.title = decodeURIComponent((filename+'').replace(/\+/g, '%20'));
+    }
+
     data.artist = data.artist || 'Unknown artist';
+
     if (data.length) {
         var minutes = Math.floor(data.length / 60);
         var seconds = data.length % 60;
