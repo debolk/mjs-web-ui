@@ -90,8 +90,6 @@ function initiatePlayer(player)
         song.onMove = move;
         song.onRemove = remove;
 
-        hideLoader();
-
         var playlistUI = document.getElementById('playlist');
 
         var entry = build_entry_ui(song);
