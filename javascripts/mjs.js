@@ -85,7 +85,7 @@ function initiatePlayer(player)
         else
             root.insertBefore(entry, root.childNodes[nindex]);
     }
-    
+
     var insert = function(song, index){
         song.onMove = move;
         song.onRemove = remove;
@@ -212,17 +212,6 @@ function showPlaylist()
             return; // No song data is available
         });
     });
-
-    // // Highlight currently playing song
-    // player.getCurrent(function(song){
-    //     if (song === {}) {
-    //         return; // No song currently playing
-    //     }
-    //     // // Find current song in UI
-    //     // var song = undefined;
-    //     // // Highlight progress in song
-    //     // draw_song_progress(song, 40, 100);
-    // }, fatal_error);
 }
 
 /**
