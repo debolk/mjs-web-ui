@@ -155,7 +155,6 @@ function enableControls(player)
      */
     document.getElementById('control-clear').addEventListener('click', function(event){
         if (confirm("Playlist wissen?")) {
-            // FIXME implement button behaviour
             window.player.playlist.clear(function(){}, fatal_error);
         }
     });
