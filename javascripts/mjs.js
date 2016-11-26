@@ -68,7 +68,7 @@ function initiatePlayer(player)
 
     var remove = function(item, index){
         var root = document.getElementById('playlist');
-        var entry = root.childNodes[index];
+        var entry = root.querySelectorAll('.entry')[index];
 
         root.removeChild(entry);
     }
@@ -76,14 +76,15 @@ function initiatePlayer(player)
     var move = function(item, pindex, nindex)
     {
         var root = document.getElementById('playlist');
-        var entry = root.childNodes[pindex];
+        var entries = root.querySelectorAll('.entry');
+        var entry = entries[pindex];
 
         root.removeChild(entry);
 
-        if(root.childNodes.length == nindex)
+        if(root.entries.length == nindex)
             root.appendChild(entry);
         else
-            root.insertBefore(entry, root.childNodes[nindex]);
+            root.insertBefore(entry, root.entries[nindex]);
     }
 
     var insert = function(song, index){
