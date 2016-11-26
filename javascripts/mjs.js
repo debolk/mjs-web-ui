@@ -115,7 +115,10 @@ function updatePlayerState()
         setPlayButton(window.player.status);
         updatePlaylistState();
         setTimeout(updatePlayerState, 1000);
-    }, fatal_error, true);
+    }, function(error){
+       fatal_error(error);
+       setTimeout(updatePlayerState, 1000);
+    });
 }
 
 function updatePlaylistState()
