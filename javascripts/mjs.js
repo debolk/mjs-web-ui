@@ -128,8 +128,11 @@ function updatePlaylistState()
         {
             var current = playlistRoot.childNodes[i];
 
-            if(playlistRoot.currentSelected !== current)
+            if(playlistRoot.currentSelected !== undefined && playlistRoot.currentSelected !== current) {
                 clear_song_progress(playlistRoot.currentSelected);
+                // when a new song starts playing, scroll to the previous song (showing that one and the new one on top)
+                playlistRoot.currentSelected.scrollIntoView({behavior: 'smooth', block: 'start'});
+            }
 
             playlistRoot.currentSelected = current;
             draw_song_progress(current, window.player.position, window.player.duration);
