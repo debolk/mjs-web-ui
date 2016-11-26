@@ -92,7 +92,7 @@ function initiatePlayer(player)
 
         var playlistUI = document.getElementById('playlist');
 
-        var entry = build_entry_ui(song);
+        var entry = build_playlist_entry(song);
         entry.uri = song.uri;
         if(playlistUI.childNodes.length == index) {
             playlistUI.appendChild(entry);
@@ -318,10 +318,34 @@ function build_directory_ui(data)
  */
 function build_song_ui(data)
 {
-    if(data.song !== undefined)
-        data = data.song;
+    data = normalize_song_data(data);
 
-    // Normalize some data for displaying
+    // Create new element
+    var element = document.createElement('div');
+    element.classList.add('entry', 'song');
+    element.entry = data;
+    element.innerHTML ='<img src="images/song.svg" alt="Song" class="icon"> \
+                        <span class="title">' + data.title + '</span> \
+                        <span class="length">' + data.length + '</span> \
+                        <br> \
+                        <span class="artist">' + data.artist + '</span> \
+                        <span class="song-controls"> \
+                            <button class=remove>Als volgende spelen</button> \
+                            <button class=remove>Toevoegen</button> \
+                        </span>';
+    return element;
+}
+
+/**
+ * Take the inconsitent data of a song and add defaults, etc.
+ * @param  {Object} data
+ * @return {Object}
+ */
+function normalize_song_data(data) {
+    if(data.song !== undefined) {
+        data = data.song;
+    }
+
     data.title = data.title || data.location.split('/').pop().split('.')[0].capitalize();
     data.artist = data.artist || 'Unknown artist';
     if (data.length) {
@@ -336,6 +360,17 @@ function build_song_ui(data)
         data.length = "Unknown length";
     }
 
+    return data;
+}
+
+/**
+ * Builds the UI element for a playlist item
+ * @param  {array} data properties of a song
+ * @return {HTMLElement}
+ */
+function build_playlist_entry(song) {
+    data = normalize_song_data(song);
+
     // Create new element
     var element = document.createElement('div');
     element.classList.add('entry', 'song');
@@ -344,7 +379,15 @@ function build_song_ui(data)
                         <span class="title">' + data.title + '</span> \
                         <span class="length">' + data.length + '</span> \
                         <br> \
-                        <span class="artist">' + data.artist + '</span> ';
+                        <span class="artist">' + data.artist + '</span> \
+                        <span class="song-controls"><button class=remove>Verwijderen</button></span>';
+
+    var button = element.querySelectorAll('.remove')[0];
+    button.addEventListener('click', function(event){
+        event.preventDefault();
+        song.remove(function(){}, fatal_error);
+    });
+
     return element;
 }
 
