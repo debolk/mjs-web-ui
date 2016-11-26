@@ -55,6 +55,11 @@ footer {
     padding: 0.25em;
 }
 
+footer span {
+    display: inline-block;
+    margin-right: 1.5em;
+}
+
 /* main interface sections*/
 section {
     padding: 1em;
