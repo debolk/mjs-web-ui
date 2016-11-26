@@ -13,7 +13,7 @@ html, body {
 body {
     margin: 0;
     font-family: "Cardo", serif;
-    font-size: x-large;
+    font-size: medium;
     padding: 0;
     background-color: #800000;
 }
@@ -33,7 +33,7 @@ header, footer {
 header {
     top: 0;
     left: 0;
-    height: 66px;
+    height: 2.5em;
     padding: 0 0 0 1em;
     position: fixed;
     top: 0;
@@ -41,9 +41,9 @@ header {
 }
 
 .content {
-    top: 66px;
+    top: 2.5em;
     right: 0;
-    bottom: 40px;
+    bottom: 2em;
     left: 0;
     background-color: #eee;
 }
@@ -51,9 +51,8 @@ header {
 footer {
     bottom: 0;
     left: 0;
-    height: 40px;
-    padding: 0.25em 0.25em 0.25em 1em;
-    font-size: 80%;
+    height: 2em;
+    padding: 0.25em;
 }
 
 /* main interface sections*/
@@ -133,10 +132,10 @@ header a, footer a {
 
 /*.Song and folder UI */
 .entry {
-    height: 5em;
+    height: 3.75em;
     border-bottom: 1px solid gray: ;
     background-color: white;
-    padding: 1em;
+    padding: 0.5em;
     margin-bottom: 0.5em;
     box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.5);
 }
@@ -156,10 +155,10 @@ header a, footer a {
 }
 
 .entry .icon {
-    width: 3em;
-    height: 3em;
+    width: 2em;
+    height: 2em;
     float: left;
-    margin-right: 1em;
+    margin-right: 0.5em;
 }
 
 /* Clearfix apply where needed */
