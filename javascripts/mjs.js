@@ -150,7 +150,7 @@ function enableControls(player)
     document.getElementById('control-clear').addEventListener('click', function(event){
         if (confirm("Weet je zeker dat je de hele playlist wilt wissen?")) {
             // FIXME implement button behaviour
-            alert('not implemented');
+            window.player.playlist.clear(function(){}, fatal_error);
         }
     });
 
