@@ -281,7 +281,12 @@ function build_up_entry(directory)
 function fatal_error(details)
 {
     console.error(details);
-    alert('Fatal error\n\nTechnical details: '+JSON.stringify(details));
+    if (details.status === 502) {
+        alert('Kan de mp3bak niet bereiken. Misschien is deze gecrasht of uitgezet?');
+    }
+    else {
+        alert('Fatal error\n\nTechnical details: '+JSON.stringify(details));
+    }
 }
 
 /**
