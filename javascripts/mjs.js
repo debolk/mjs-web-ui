@@ -390,7 +390,7 @@ function normalize_song_data(data) {
         data.length = minutes + ":" + seconds;
     }
     else {
-        data.length = "Unknown length";
+        data.length = "";
     }
 
     return data;
