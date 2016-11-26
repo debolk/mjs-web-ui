@@ -164,7 +164,7 @@ function enableControls(player)
      */
     document.getElementById('control-shuffle').addEventListener('click', function(event){
         if (confirm("Playlist shufflen?")) {
-            var current_song = document.getElementById('playlist').playingSongElement;
+            var current_song = document.getElementById('playlist').playingSongElement.entry;
             window.player.playlist.shuffle(current_song, function(){}, fatal_error);
         }
     });
