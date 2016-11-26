@@ -106,7 +106,6 @@ function initiatePlayer(player)
     player.playlist.onAdd = insert;
 
     showLoader(document.getElementById('songinfo'));
-    makeDropTarget();
 
     enableControls(player);
     setTimeout(updatePlayerState, 1000);
@@ -138,27 +137,6 @@ function updatePlaylistState()
             draw_song_progress(current, window.player.position, window.player.duration);
         }
     }
-}
-
-function makeDropTarget()
-{
-    var playlist = document.getElementById('playlist');
-
-    // Do not remove, these event handlers are needed for dragging to work
-    playlist.addEventListener('dragenter', function(event) {
-        event.preventDefault();
-    });
-    playlist.addEventListener('dragover', function(event) {
-        event.preventDefault();
-    });
-
-    playlist.addEventListener('drop', dropSongOnPlaylist);
-}
-
-function dropSongOnPlaylist(event)
-{
-    event.preventDefault();
-    var data = JSON.parse(event.dataTransfer.getData('application/json'));
 }
 
 /**
@@ -369,13 +347,6 @@ function build_song_ui(data)
                         <span class="length">' + data.length + '</span> \
                         <br> \
                         <span class="artist">' + data.artist + '</span> ';
-
-    // Define element behaviour
-    element.draggable = true;
-    element.addEventListener('dragstart', function(event){
-        event.dataTransfer.setData("application/json", JSON.stringify(this.entry));
-    });
-
     return element;
 }
 
