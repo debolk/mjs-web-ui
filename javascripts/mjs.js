@@ -316,9 +316,9 @@ function build_directory_ui(data)
  * @param  {array} data the data object describing the song
  * @return {String}      the rendered HTML
  */
-function build_song_ui(data)
+function build_song_ui(song)
 {
-    data = normalize_song_data(data);
+    data = normalize_song_data(song);
 
     // Create new element
     var element = document.createElement('div');
@@ -330,9 +330,15 @@ function build_song_ui(data)
                         <br> \
                         <span class="artist">' + data.artist + '</span> \
                         <span class="song-controls"> \
-                            <button class=remove>Als volgende spelen</button> \
-                            <button class=remove>Toevoegen</button> \
+                            <button class=insert>Als volgende spelen</button> \
+                            <button class=append>Toevoegen</button> \
                         </span>';
+
+    var append_button = element.querySelectorAll('.append')[0]
+    append_button.addEventListener('click', function(event){
+        event.preventDefault();
+        window.player.playlist.append(song, function(){}, fatal_error);
+    });
     return element;
 }
 
