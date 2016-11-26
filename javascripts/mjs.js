@@ -128,13 +128,13 @@ function updatePlaylistState()
         {
             var current = playlistRoot.childNodes[i];
 
-            if(playlistRoot.currentSelected !== undefined && playlistRoot.currentSelected !== current) {
-                clear_song_progress(playlistRoot.currentSelected);
+            if(playlistRoot.playingSong !== undefined && playlistRoot.playingSong !== current) {
+                clear_song_progress(playlistRoot.playingSong);
                 // when a new song starts playing, scroll to the previous song (showing that one and the new one on top)
-                playlistRoot.currentSelected.scrollIntoView({behavior: 'smooth', block: 'start'});
+                playlistRoot.playingSong.scrollIntoView({behavior: 'smooth', block: 'start'});
             }
 
-            playlistRoot.currentSelected = current;
+            playlistRoot.playingSong = current;
             draw_song_progress(current, window.player.position, window.player.duration);
         }
     }
