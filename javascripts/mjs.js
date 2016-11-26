@@ -178,6 +178,22 @@ function enableControls(player)
     });
 
     /*
+     * Backward button
+     */
+    document.getElementById('control-backward').addEventListener('click', function(event){
+        event.preventDefault();
+        window.player.previous(function(){}, fatal_error);
+    });
+
+    /*
+     * Forward button
+     */
+    document.getElementById('control-forward').addEventListener('click', function(event){
+        event.preventDefault();
+        window.player.next(function(){}, fatal_error);
+    });
+
+    /*
      * Play/pause button
      */
     var control = document.getElementById('control-play');
