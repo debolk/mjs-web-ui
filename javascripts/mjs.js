@@ -281,7 +281,7 @@ function build_up_entry(directory)
 function fatal_error(details)
 {
     console.error(details);
-    alert('Fatal error\n\nTechnical details: '+details.toString());
+    alert('Fatal error\n\nTechnical details: '+JSON.stringify(details));
 }
 
 /**
