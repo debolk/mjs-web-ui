@@ -78,6 +78,7 @@ section {
     border-bottom: 1px solid darkgray;
     left: 50%;
     height: 6em;
+    overflow: hidden;
 }
 
 #playlist {
