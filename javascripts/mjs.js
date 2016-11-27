@@ -407,6 +407,22 @@ function build_song_ui(song)
         event.preventDefault();
         window.player.playlist.append(song, function(){}, fatal_error);
     });
+
+    var insert_button = element.querySelectorAll('.insert')[0];
+    insert_button.addEventListener('click', function(event) {
+        event.preventDefault();
+        window.player.getCurrentItem(function(item) {
+            var id = window.player.playlist.items.indexOf(item);
+            if (id == -1)
+                id = window.player.playlist.items.length - 1;
+            if (id >= window.player.playlist.items.length) {
+                window.player.playlist.append(song, function(){}, fatal_error);
+            } else {
+                var next = window.player.playlist.items[id];
+                window.player.playlist.insert(song, next, function(){}, fatal_error);
+            }
+        }, fatal_error);
+    })
     return element;
 }
 
