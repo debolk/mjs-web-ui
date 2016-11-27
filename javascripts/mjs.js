@@ -464,6 +464,12 @@ function build_playlist_entry(song) {
     var button = element.querySelectorAll('.remove')[0];
     button.addEventListener('click', function(event){
         event.preventDefault();
+
+        // If deleting the currently playin song, skip to next song first
+        if (song.uri === window.player.currentState.url) {
+            window.player.next(function(){}, fatal_error);
+        }
+
         song.remove(function(){}, fatal_error);
     });
 
