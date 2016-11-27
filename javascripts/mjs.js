@@ -336,8 +336,9 @@ function draw_song_progress(song, current, total)
 
 function clear_song_progress(song)
 {
-    if(song === undefined)
+    if(song === undefined || song.style === undefined) {
         return;
+    }
     song.style.background = 'white';
 }
 
