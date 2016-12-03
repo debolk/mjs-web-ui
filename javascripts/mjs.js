@@ -20,6 +20,9 @@ document.addEventListener('DOMContentLoaded', function(){
     });
 });
 
+// Types used for ordering entries and sorting
+Types = { up: 0, directory: 1, song: 2 };
+
 /**
  * Checks if the required configuration object is present
  * @return {undefined}
@@ -250,14 +253,14 @@ function openDirectory(directory)
 
     // Append a Up()-call if needed
     if (directory.previous) {
-        songinfo.appendChild(build_up_entry(directory.previous));
+        insertDirectoryElementOrdered(build_up_entry(directory.previous));
     }
 
     directory.entries.forEach(function(entryURL){
         directory.open(entryURL, function(entry){
             if (isValidEntry(entry)) {
                 var element = build_entry_ui(entry);
-                songinfo.appendChild(element);
+                insertDirectoryElementOrdered(element);
             }
             else {
                 console.log("Not a valid entry to play or open", entry);
@@ -293,6 +296,10 @@ function build_up_entry(directory)
     var up = document.createElement('div');
     up.classList.add('entry', 'up');
     up.entry = directory;
+    up.ordering = {
+        entryType: Types.up,
+        description: "...",
+    };
     up.innerHTML ='<img src="images/directory.svg" alt="Directory" class="icon"> \
                         <span class="title">&hellip;</span>';
     up.addEventListener('click', function(event){
@@ -371,6 +378,10 @@ function build_directory_ui(data)
     element.entry = data;
     element.innerHTML ='<img src="images/directory.svg" alt="Directory" class="icon"> \
                         <span class="title">' + data.name + '</span>';
+    element.ordering = {
+        entryType: Types.directory,
+        description: data.name,
+    };
 
     element.addEventListener('click', function(event){
         event.preventDefault();
@@ -401,6 +412,10 @@ function build_song_ui(song)
                             <button class=insert>Als volgende spelen</button> \
                             <button class=append>Toevoegen</button> \
                         </span>';
+    element.ordering = {
+        entryType: Types.song,
+        description: data.title,
+    };
 
     var append_button = element.querySelectorAll('.append')[0]
     append_button.addEventListener('click', function(event){
@@ -506,5 +521,52 @@ function setPlayButton(state)
     }
     else {
         icon.src = 'images/play.svg';
+    }
+}
+
+/**
+ * Inserts an entry in the 'good position' in the directory browser. Basic rules:
+ * 1) never before the "up" entry
+ * 2) directories first, songs second
+ * 3) sorted alphabetically by displayed title
+ *
+ * @param  {DOMelement} entry
+ * @param  {DOMelement} directory
+ * @return {void}
+ */
+function insertDirectoryElementOrdered(entry) {
+    // Append if this is going to be the only entry
+    if (songinfo.children.length == 0) {
+        songinfo.appendChild(entry);
+        return;
+    }
+
+    // Find the entry this one
+    var items = songinfo.children.querySelectorAll('.entry');
+    for (var i = 0; i < items.length; i++) {
+        if (directoryOrderingComparator(entry, items[i]) > 0) {
+            songinfo.insertBefore(entry, items[i]);
+            return;
+        }
+    }
+
+    // No match, insert as the last entry
+    songinfo.appendChild(entry);
+}
+
+/**
+ * Compare two entries in the directory browser for ordering
+ * @param  {HTMLelement} a
+ * @param  {HTMLelement} b
+ * @return {int}
+ */
+function directoryOrderingComparator(a, b) {
+
+    if (a.ordering.entryType != b.ordering.entryTypes) {
+        return a.ordering.entryType - b.ordering.entryType;
+    }
+
+    if (a.ordering.description != b.ordering.description) {
+        return a.ordering.description.localeCompare(b.ordering.description);
     }
 }
