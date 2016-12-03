@@ -544,7 +544,7 @@ function insertDirectoryElementOrdered(entry) {
     // Find the entry this one
     var items = songinfo.children.querySelectorAll('.entry');
     for (var i = 0; i < items.length; i++) {
-        if (directoryOrderingComparator(entry, items[i]) > 0) {
+        if (directoryOrderingComparator(entry, items[i]) < 0) {
             songinfo.insertBefore(entry, items[i]);
             return;
         }
