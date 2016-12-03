@@ -1,13 +1,13 @@
 window.MJSWebUI = window.MJSWebUI || {};
 MJSWebUI.config = {
     mjs: {
-        endpoint: '',
+        endpoint: 'http://musicbrainz.i.bolkhuis.nl/',
     },
     oauth: {
-        endpoint: '',
+        endpoint: 'https://auth.debolk.nl',
         client_id: '',
         client_secret: '',
         redirect_uri: '',
-        resource: '',
+        resource: 'mp3control',
     },
 };
