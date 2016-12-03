@@ -251,6 +251,9 @@ function openDirectory(directory)
     // Clear the list
     songinfo.innerHTML = '';
 
+    // Store the current directory in the UI for comparison later
+    songinfo.currentDirectory = directory;
+
     // Append a Up()-call if needed
     if (directory.previous) {
         insertDirectoryElementOrdered(build_up_entry(directory.previous));
@@ -259,8 +262,12 @@ function openDirectory(directory)
     directory.entries.forEach(function(entryURL){
         directory.open(entryURL, function(entry){
             if (isValidEntry(entry)) {
+                // Construct appropriate UI element
                 var element = build_entry_ui(entry);
-                insertDirectoryElementOrdered(element);
+                // Check if the current directory still matches (we might have navigated away in the meantime)
+                if (entry.directory == songinfo.currentDirectory) {
+                    insertDirectoryElementOrdered(element);
+                }
             }
             else {
                 console.log("Not a valid entry to play or open", entry);
