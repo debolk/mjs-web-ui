@@ -12,7 +12,7 @@ document.addEventListener('DOMContentLoaded', function(){
 
     // Load top-level directory entries and display them
     var songinfo = document.querySelector('#songinfo .songs');
-    mjs.files.listBrowse(processBrowseCapabilities, fatal_error);
+    mjs.files.listBrowse(processBrowseCapabilities, maybe_offline_error);
 
     // Load the player
     mjs.players.getMjs(function(players){
@@ -323,6 +323,17 @@ function fatal_error(details)
     else {
         alert('Fatal error\n\nTechnical details: '+JSON.stringify(details));
     }
+}
+
+/**
+ * Show a fatal error to the user indicating they are probably not on the local network
+ * @param  {string} details technical details of the error
+ * @return {undefined}
+ */
+function maybe_offline_error(details)
+{
+    console.error(details);
+    alert('Kan de muziekserver niet bereiken. Ben je wel verbonden met Bolknet of kabel?');
 }
 
 /**
