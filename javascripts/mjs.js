@@ -82,20 +82,7 @@ function initiatePlayer(player)
         var entries = playlistUI.getElementsByClassName('entry');
         var entry = entries[previous_index];
 
-        console.log('moving item', item);
-        console.log('from index', previous_index);
-        console.log('to index', new_index);
-        console.log('entry to move', entry);
-
         playlistUI.insertBefore(entry, entries[new_index]);
-        return;
-
-        // insert as last item in the playlist
-        if(entries.length == new_index) {
-            playlistUI.appendChild(entry);
-        }
-        else {
-        }
     }
 
     var insert = function(song, index){
@@ -470,8 +457,9 @@ function build_song_ui(song)
         event.preventDefault();
         window.player.getCurrentItem(function(item) {
             var id = window.player.playlist.items.indexOf(item);
-            if (id == -1)
+            if (id == -1) {
                 id = window.player.playlist.items.length - 1;
+            }
             if (id >= window.player.playlist.items.length) {
                 window.player.playlist.append(song, function(){}, fatal_error);
             } else {
