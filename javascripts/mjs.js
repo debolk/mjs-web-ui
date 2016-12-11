@@ -265,7 +265,7 @@ function openDirectory(directory)
                 // Construct appropriate UI element
                 var element = build_entry_ui(entry);
                 // Check if the current directory still matches (we might have navigated away in the meantime)
-                if (entry.directory == songinfo.currentDirectory) {
+                if (entry.previous == songinfo.currentDirectory) {
                     insertDirectoryElementOrdered(element);
                 }
             }
