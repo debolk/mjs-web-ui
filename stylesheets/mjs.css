@@ -131,6 +131,16 @@ header a, footer a {
     cursor: pointer;
 }
 
+/* make control smaller on small windows */
+@media (max-width: 1024px) {
+    #controls .player {  float:  left; }
+    .control {
+        margin-right: 2px;
+        border: 1px solid #ccc;
+        box-shadow: none;
+    }
+}
+
 .control:active {
     box-shadow: none;
     background-color: #aaa;
