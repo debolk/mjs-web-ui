@@ -580,7 +580,7 @@ function insertDirectoryElementOrdered(entry) {
  */
 function directoryOrderingComparator(a, b) {
 
-    if (a.ordering.entryType != b.ordering.entryTypes) {
+    if (a.ordering.entryType != b.ordering.entryType) {
         return a.ordering.entryType - b.ordering.entryType;
     }
 
