@@ -76,18 +76,26 @@ function initiatePlayer(player)
         root.removeChild(entry);
     }
 
-    var move = function(item, pindex, nindex)
+    var move = function(item, new_index, previous_index)
     {
-        var root = document.getElementById('playlist');
-        var entries = root.querySelectorAll('.entry');
-        var entry = entries[pindex];
+        var playlistUI = document.getElementById('playlist');
+        var entries = playlistUI.getElementsByClassName('entry');
+        var entry = entries[previous_index];
 
-        root.removeChild(entry);
+        console.log('moving item', item);
+        console.log('from index', previous_index);
+        console.log('to index', new_index);
+        console.log('entry to move', entry);
 
-        if(root.entries.length == nindex)
-            root.appendChild(entry);
-        else
-            root.insertBefore(entry, root.entries[nindex]);
+        playlistUI.insertBefore(entry, entries[new_index]);
+        return;
+
+        // insert as last item in the playlist
+        if(entries.length == new_index) {
+            playlistUI.appendChild(entry);
+        }
+        else {
+        }
     }
 
     var insert = function(song, index){
