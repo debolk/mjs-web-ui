@@ -102,7 +102,7 @@ function initiatePlayer(player)
             playlistUI.appendChild(entry);
         }
         else {
-            playlistUI.insertBefore(entry, playlistUI.childNodes.length[index]);
+            playlistUI.insertBefore(entry, playlistUI.childNodes[index]);
         }
     }
 
