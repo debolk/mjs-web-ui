@@ -264,8 +264,9 @@ function openDirectory(directory)
             if (isValidEntry(entry)) {
                 // Construct appropriate UI element
                 var element = build_entry_ui(entry);
-                // Check if the current directory still matches (we might have navigated away in the meantime)
-                if (entry.previous == songinfo.currentDirectory) {
+                // Check if the item we are about to render is contained in the current directory
+                // (that might seem superfluous, but we might have navigated away in the meantime)
+                if (isContainedIn(songinfo.currentDirectory, entry)) {
                     insertDirectoryElementOrdered(element);
                 }
             }
@@ -274,6 +275,21 @@ function openDirectory(directory)
             }
         }, fatal_error);
     });
+}
+
+/**
+ * Determine whether an entry is contained in a directory
+ * @param  {Directory}  directory
+ * @param  {Directory | Song}  entry
+ * @return {Boolean}
+ */
+function isContainedIn(directory, entry) {
+    if (entry.type === 'directory') {
+        return entry.previous === directory;
+    }
+    if (entry.type === 'song') {
+        return directory.entries.includes(entry.uri);
+    }
 }
 
 /**
